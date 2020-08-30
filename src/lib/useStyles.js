@@ -1,5 +1,5 @@
-import { p } from './stylesPath';
 import { useRef, useEffect, useCallback } from 'react';
+import { use } from './stylesPath';
 
 // create local hook cache for returned arrays, so we can avoid re-renders
 const cache = Object.create(null);
@@ -16,17 +16,15 @@ export default (nameSpace) => {
     };
   }, []);
 
-  const pWithHookCache = useCallback((path) => {
+  return useCallback((path) => {
     const memoizedStyles = cache[uid.current][path];
     if (memoizedStyles) {
       return memoizedStyles;
     }
 
-    const styles = p(path, null, nameSpace);
+    const styles = use(path, nameSpace);
     Object.assign(cache[uid.current], { [path]: styles });
     
     return styles;
   }, []);
-
-  return pWithHookCache;
 };

@@ -1,0 +1,12 @@
+/* Use cases:
+  input: 'fx-dir-col'
+  output: { flexDirection: 'column' }
+*/
+export default Object.assign(Object.create(null), {
+  bot: "bottom",
+  col: "column",
+  dir: "direction",
+  fx: "flex",
+  lt: "left",
+  rt: "right",
+});

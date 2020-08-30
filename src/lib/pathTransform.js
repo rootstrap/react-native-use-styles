@@ -68,7 +68,7 @@ export default (path) => {
     currentNode = getKeyFromParts(currentNode, parts, pos);
 
     // if it's an object we need to keep digging
-    // otherwise we found a value; is undefined
+    // otherwise is undefined cause we found a value
     if (!currentNode) {
       const [value, newPos] = getValueFromParts(parts, pos, style);
       pos = newPos;
