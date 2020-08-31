@@ -1,8 +1,7 @@
-// TODO: separator could be changed by configuration
 import stylesDictionary from "./stylesDictionary";
 import aliasesDictionary from "./aliasesDictionary";
 
-export const SEPARATOR = "-";
+export const separator = "-";
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
@@ -58,7 +57,7 @@ const getValueFromParts = (parts, pos) => {
 */
 export default (path) => {
   let style = Object.create(null);
-  const parts = path.split(SEPARATOR);
+  const parts = path.split(separator);
 
   // iterates until find a value, then iterates until find another key or until end
   let currentNode = getKeyFromParts(stylesDictionary, parts, 0);
@@ -82,4 +81,8 @@ export default (path) => {
   }
 
   return style;
+};
+
+export const setSeparator = (sp) => {
+  SEPARATOR = sp;
 };

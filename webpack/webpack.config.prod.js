@@ -5,14 +5,18 @@ const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
   entry: {
-    rnsp: Path.resolve(__dirname, "../src/index.js"),
+    rnus: Path.resolve(__dirname, "../src/index.js"),
   },
   mode: "production",
   devtool: "source-map",
   stats: "errors-only",
   bail: true,
   output: {
-    filename: "js/[name].js"
+    path: Path.join(__dirname, "../dist"),
+    filename: "[name].js",
+    library: "rnus",
+    libraryTarget: "umd",
+    globalObject: "this",
   },
   plugins: [
     new Webpack.DefinePlugin({

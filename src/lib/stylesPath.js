@@ -9,23 +9,27 @@
 import transform from "./pathTransform";
 
 const classesCache = Object.create(null);
+const styleSheet = null;
 
 const styleSheetNoop = {
   flatten: (styles) => styles,
-  create: (styles) => styles
+  create: (styles) => styles,
 };
 
-const isClassName = (path) => path.startsWith('.');
+const getStyleSheet = () => styleSheet || styleSheetNoop;
+const isClassName = (path) => path.startsWith(".");
 const getClassName = (path) => path.substring(1);
 const flattenStyles = (styles, className) => {
-  let flatten = styles.reduce((flattenStyles, style) => 
-    Object.assign(flattenStyles, style), Object.create(null));
-  
+  let flatten = styles.reduce(
+    (flattenStyles, style) => Object.assign(flattenStyles, style),
+    Object.create(null)
+  );
+
   return {
-    [className]: flatten
+    [className]: flatten,
   };
 };
-  
+
 const getFromCache = (className, nameSpace) => {
   if (!nameSpace) {
     return classesCache[className];
@@ -51,15 +55,15 @@ const setInCache = (styles, nameSpace) => {
 
 export const globalDefine = (pathOrObject, className, nameSpace) => {
   let styles = [pathOrObject];
-  
+
   // if it's a path, we need to transform it
-  if (typeof pathOrObject !== 'object') {
+  if (typeof pathOrObject !== "object") {
     styles = pathOrObject.split(" ").map((p) => {
       if (isClassName(p)) {
         const style = getFromCache(getClassName(p), nameSpace);
 
         // get style object from from styleSheet ID
-        return styleSheetNoop.flatten(style, nameSpace);
+        return getStyleSheet().flatten(style, nameSpace);
       }
 
       return transform(p);
@@ -67,7 +71,7 @@ export const globalDefine = (pathOrObject, className, nameSpace) => {
   }
 
   styles = flattenStyles(styles, className);
-  setInCache(styleSheetNoop.create(styles), nameSpace);
+  setInCache(getStyleSheet().create(styles), nameSpace);
 };
 
 export const globalUse = (path, nameSpace) => {
@@ -87,3 +91,6 @@ export const namespace = (nameSpace) => ({
   use: (path) => globalUse(path, nameSpace),
 });
 
+export const setStyleSheet = (ss) => {
+  styleSheet = ss;
+};
