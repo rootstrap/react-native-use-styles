@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback } from "react";
-import { use } from "./stylesPath";
+import { globalUse } from "./stylesPath";
 
 // create local cache for returned arrays, so we can avoid re-renders
 const cache = Object.create(null);
@@ -22,7 +22,7 @@ export default (nameSpace) => {
       return memoizedStyles;
     }
 
-    const styles = use(path, nameSpace);
+    const styles = globalUse(path, nameSpace);
     Object.assign(cache[uid.current], { [path]: styles });
 
     return styles;

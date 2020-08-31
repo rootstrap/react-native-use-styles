@@ -6,13 +6,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = merge(common, {
   entry: {
-    app: Path.resolve(__dirname, "../demo/scripts/index.js"),
+    demo: Path.resolve(__dirname, "../demo/scripts/index.js"),
   },
   mode: "development",
   devtool: "source-map",
-  output: {
-    chunkFilename: "js/[name].chunk.js",
-  },
   devServer: {
     inline: true,
     hot: true,

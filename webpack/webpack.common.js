@@ -3,14 +3,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   output: {
-    path: Path.join(__dirname, "../build"),
+    path: Path.join(__dirname, "../dist"),
     filename: "js/[name].js",
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      name: false,
-    },
   },
   plugins: [new CleanWebpackPlugin()],
   resolve: {

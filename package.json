@@ -6,6 +6,8 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js --colors",
     "start": "webpack-dev-server --open --config webpack/webpack.config.dev.js"
   },
+  "main": "dist/rnsp.js",
+  "files": [ "dist" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wbkd/webpack-starter.git"
@@ -22,6 +24,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wbkd/webpack-starter/issues"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
@@ -48,6 +53,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "react": "^16.13.1"
   }
 }
