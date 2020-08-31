@@ -1,7 +1,7 @@
-import { useRef, useEffect, useCallback } from 'react';
-import { use } from './stylesPath';
+import { useRef, useEffect, useCallback } from "react";
+import { use } from "./stylesPath";
 
-// create local hook cache for returned arrays, so we can avoid re-renders
+// create local cache for returned arrays, so we can avoid re-renders
 const cache = Object.create(null);
 
 export default (nameSpace) => {
@@ -24,7 +24,7 @@ export default (nameSpace) => {
 
     const styles = use(path, nameSpace);
     Object.assign(cache[uid.current], { [path]: styles });
-    
+
     return styles;
   }, []);
 };

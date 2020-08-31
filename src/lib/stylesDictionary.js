@@ -142,7 +142,7 @@ export default Object.assign(Object.create(null), {
   },
   tint: { color: { __propName: "tintColor" } },
   top: { __propName: "top" },
-  transform: { __propName: "transform" }, //TODO: not supported, not primitive value, this receives an array (?)
+  transform: { __propName: "transform" }, //TODO: not supported, not primitive value, this receives an array
   translate: {
     x: { __propName: "translateX" },
     y: { __propName: "translateY" },

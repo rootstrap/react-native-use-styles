@@ -3,46 +3,55 @@
 // TODO: check if there are collisions like fl:dir:row:1 could be 'flexDirection: row' and 'flexDirectionRow: 1' (?)
 // TODO: validate props and values (?)
 // TODO: View, Text, Touchable, etc wrappers; so you use className prop instead of styles={p(...)}
+// add "#namespace .class1 .class2" or { View, Text } = nameSpacedComponent('namespace');
+// maybe using
 // TODO: Conditional classes as with cn(...)
+// TODO: add errors; inexistent-namespace when get cache, undefined-path or not key-value present, invalid-key, undefiend-classname
 import { StyleSheet } from "react-native";
 import transform from "./pathTransform";
 
-const stylesCache = Object.create(null);
+const classesCache = Object.create(null);
 
-const getNameSpacedCache = (nameSpace) => {
-  let cache = stylesCache;
+const getFromCache = (className, nameSpace) => {
+  if (!nameSpace) {
+    return classesCache[className];
+  }
 
-  if (nameSpace) {
-    if (!cache[nameSpace]) {
-      cache[nameSpace] = Object.create(null);
+  return (
+    (classesCache[nameSpace] && classesCache[nameSpace][className]) ||
+    classesCache[className]
+  );
+};
+
+const setInCache = (className, styles, nameSpace) => {
+  if (!nameSpace) {
+    classesCache[className] = styles;
+  } else {
+    if (!classesCache[nameSpace]) {
+      classesCache[nameSpace] = Object.create(null);
     }
-    cache = cache[nameSpace];
-  };
 
-  return cache;
+    classesCache[nameSpace][className] = styles;
+  }
 };
 
 export const define = (path, className, nameSpace) => {
-  let cache = getNameSpacedCache(nameSpace);
-
-  const styles = path.split(' ').map((p) => {
+  let styles = path.split(" ").map((p) => {
     if (isClassName(p)) {
-      return cache[p];
+      // TODO: test without flatten
+      return StyleSheet.flatten(getFromCache(p, nameSpace));
     }
 
-    return StyleSheet.Create(transform(p));
+    return transform(p);
   });
 
-  cache[className] = styles;
-  return styles;
+  setInCache(className, StyleSheet.create(styles), nameSpace);
 };
 
 export const use = (path, nameSpace) => {
-  let cache = getNameSpacedCache(nameSpace);
-
-  const styles = path.split(' ').map((p) => {
+  const styles = path.split(" ").map((p) => {
     if (isClassName(p)) {
-      return cache[p];
+      return getFromCache(p, nameSpace);
     }
 
     return transform(p);

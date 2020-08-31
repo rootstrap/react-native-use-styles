@@ -1,5 +1,4 @@
-// TODO: transform numbers from path's string
-// TODO: separator could be changed by configuration (?)
+// TODO: separator could be changed by configuration
 import stylesDictionary from "./stylesDictionary";
 import aliasesDictionary from "./aliasesDictionary";
 
@@ -25,6 +24,7 @@ const getValueFromParts = (parts, pos) => {
     newPos += 1;
   }
   value = value.substring(1);
+  value = parseFloat(value) || value;
 
   return [value, newPos];
 };
