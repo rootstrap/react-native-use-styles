@@ -1,34 +1,17 @@
 // TODO: p(124235, 'fl-row') to send the identifier of a Stylesheet.create style
-// TODO: check if there are collisions like fl:dir:row:1 could be 'flexDirection: row' and 'flexDirectionRow: 1' (?)
+// TODO: check if there are collisions between keys and values as
+// fl:dir:row:1 could be 'flexDirection: row 1' and 'flexDirectionRow: 1' (?)
 // TODO: validate props and values (?)
 // TODO: View, Text, Touchable, etc wrappers; so you use className prop instead of styles={p(...)}
 // add "#namespace .class1 .class2" or { View, Text } = nameSpacedComponent('namespace');
 // maybe using
 // TODO: Conditional classes as with cn(...)
 // TODO: add errors; inexistent-namespace when get cache, undefined-path or not key-value present, invalid-key, undefiend-classname
+import { checkFalsey, isClassName, getClassName, flattenStyles } from "./utils";
 import transform from "./pathTransform";
+import Stylesheet from "react-native";
 
 const classesCache = Object.create(null);
-const styleSheet = null;
-
-const styleSheetNoop = {
-  flatten: (styles) => styles,
-  create: (styles) => styles,
-};
-
-const getStyleSheet = () => styleSheet || styleSheetNoop;
-const isClassName = (path) => path.startsWith(".");
-const getClassName = (path) => path.substring(1);
-const flattenStyles = (styles, className) => {
-  let flatten = styles.reduce(
-    (flattenStyles, style) => Object.assign(flattenStyles, style),
-    Object.create(null)
-  );
-
-  return {
-    [className]: flatten,
-  };
-};
 
 const getFromCache = (className, nameSpace) => {
   if (!nameSpace) {
@@ -58,30 +41,46 @@ export const globalDefine = (pathOrObject, className, nameSpace) => {
 
   // if it's a path, we need to transform it
   if (typeof pathOrObject !== "object") {
-    styles = pathOrObject.split(" ").map((p) => {
-      if (isClassName(p)) {
-        const style = getFromCache(getClassName(p), nameSpace);
+    styles = pathOrObject
+      .trim()
+      .split(" ")
+      .reduce((stylesAcc, p) => {
+        if (checkFalsey(p)) {
+          return;
+        }
 
-        // get style object from from styleSheet ID
-        return getStyleSheet().flatten(style, nameSpace);
-      }
+        if (isClassName(p)) {
+          const style = getFromCache(getClassName(p), nameSpace);
 
-      return transform(p);
-    });
+          // get style object from from styleSheet ID
+          stylesAcc.push(Stylesheet.flatten(style, nameSpace));
+          return;
+        }
+
+        stylesAcc.push(transform(p));
+      }, []);
   }
 
   styles = flattenStyles(styles, className);
-  setInCache(getStyleSheet().create(styles), nameSpace);
+  setInCache(Stylesheet.create(styles), nameSpace);
 };
 
 export const globalUse = (path, nameSpace) => {
-  const styles = path.split(" ").map((p) => {
-    if (isClassName(p)) {
-      return getFromCache(getClassName(p), nameSpace);
-    }
+  const styles = path
+    .trim()
+    .split(" ")
+    .reduce((stylesAcc, p) => {
+      if (checkFalsey(p)) {
+        return;
+      }
 
-    return transform(p);
-  });
+      if (isClassName(p)) {
+        stylesAcc.push(getFromCache(getClassName(p), nameSpace));
+        return;
+      }
+
+      stylesAcc.push(transform(p));
+    }, []);
 
   return styles;
 };
@@ -90,7 +89,3 @@ export const namespace = (nameSpace) => ({
   define: (path, className) => globalDefine(path, className, nameSpace),
   use: (path) => globalUse(path, nameSpace),
 });
-
-export const setStyleSheet = (ss) => {
-  styleSheet = ss;
-};

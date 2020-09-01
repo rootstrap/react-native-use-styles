@@ -1,5 +1,5 @@
 /* Use cases:
-  input: 'fx-dir-col'
+  input: 'fx:dir:col'
   output: { flexDirection: 'column' }
 */
 export default Object.assign(Object.create(null), {

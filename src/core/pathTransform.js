@@ -1,7 +1,7 @@
 import stylesDictionary from "./stylesDictionary";
 import aliasesDictionary from "./aliasesDictionary";
 
-export const separator = "-";
+export const separator = ":";
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
@@ -30,25 +30,25 @@ const getValueFromParts = (parts, pos) => {
 
 // PRECONDITION: at least one key-value pair exists in the path
 /* Use cases:
-  input: "fx-1" // Done
+  input: "fx:1" // Done
   output:
   {
     flex: 1
   }
 
-  input: "fx-1-2" // Done
+  input: "fx:1:2" // Done
   output:
   {
     flex: 1 2
   }
 
-  input: "fx-dir-row" // Done
+  input: "fx:dir:row" // Done
   output:
   {
     flexDirection: 'row'
   }
 
-  input: "fx-1-2-dir-row"
+  input: "fx:1:2:dir:row"
   output:
   {
     flex: 1 2,
