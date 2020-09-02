@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { globalUse } from "./stylesPath";
 
 // create local cache for returned arrays, so we can avoid re-renders
-const cache = Object.create(null);
+const localCache = Object.create(null);
 
 // namespace should be a symbol exported from the styles
 export default (nameSpace) => {
@@ -11,28 +11,28 @@ export default (nameSpace) => {
 
   useEffect(() => {
     return () => {
-      cache[uid.current] = null;
+      delete localCache[uid.current];
     };
   }, []);
 
-  const use = useCallback((strings, ...expressions) => {
+  const cs = useCallback((strings, ...expressions) => {
     const path = strings.reduce(
       (result, currentString, i) =>
         `${result}${currentString}${expressions[i] ? expressions[i] : ""}`,
       ""
     );
 
-    if (!cache[uid.current]) {
-      cache[uid.current] = Object.create(null);
-    } else if (cache[uid.current][path]) {
-      return cache[uid.current][path];
+    if (!localCache[uid.current]) {
+      localCache[uid.current] = Object.create(null);
+    } else if (localCache[uid.current][path]) {
+      return localCache[uid.current][path];
     }
 
     const styles = globalUse(path, nameSpace);
-    Object.assign(cache[uid.current], { [path]: styles });
+    Object.assign(localCache[uid.current], { [path]: styles });
 
     return styles;
   }, []);
 
-  return use;
+  return cs;
 };

@@ -7,85 +7,102 @@
 // maybe using
 // TODO: Conditional classes as with cn(...)
 // TODO: add errors; inexistent-namespace when get cache, undefined-path or not key-value present, invalid-key, undefiend-classname
-import { checkFalsey, isClassName, getClassName, flattenStyles } from "./utils";
-import transform from "./pathTransform";
 import Stylesheet from "react-native";
+import {
+  isFalseyString,
+  isClassName,
+  getClassName,
+  flattenStyles,
+} from "./utils";
+import transform from "./pathTransform";
 
-const classesCache = Object.create(null);
+const globalCache = Object.create(null);
 
-const getFromCache = (className, nameSpace) => {
-  if (!nameSpace) {
-    return classesCache[className];
+const getFromCache = (className, namespace) => {
+  let style;
+
+  if (!namespace) {
+    style = globalCache[className];
+  } else {
+    style =
+      (globalCache[namespace] && globalCache[namespace][className]) ||
+      globalCache[className];
   }
 
-  return (
-    (classesCache[nameSpace] && classesCache[nameSpace][className]) ||
-    classesCache[className]
-  );
+  // get style from stylesheet id
+  return Stylesheet.flatten(style);
 };
 
-const setInCache = (styles, nameSpace) => {
-  if (!nameSpace) {
-    Object.assign(classesCache, styles);
+const setInCache = (definition, namespace) => {
+  const nativeCache = Stylesheet.create(definition);
+
+  if (!namespace) {
+    Object.assign(globalCache, nativeCache);
   } else {
-    if (!classesCache[nameSpace]) {
-      classesCache[nameSpace] = Object.create(null);
+    if (!globalCache[namespace]) {
+      globalCache[namespace] = Object.create(null);
     }
 
-    Object.assign(classesCache[nameSpace], styles);
+    Object.assign(globalCache[namespace], nativeCache);
   }
 };
 
-export const globalDefine = (pathOrObject, className, nameSpace) => {
-  let styles = [pathOrObject];
+export const globalDefine = (definition, namespace) => {
+  for (let [key, value] of Object.entries(definition)) {
+    if (typeof value !== "object") {
+      const styles = value
+        .trim()
+        .split(" ")
+        .reduce((stylesAcc, path) => {
+          let style;
 
-  // if it's a path, we need to transform it
-  if (typeof pathOrObject !== "object") {
-    styles = pathOrObject
-      .trim()
-      .split(" ")
-      .reduce((stylesAcc, p) => {
-        if (checkFalsey(p)) {
-          return;
-        }
+          if (isClassName(path)) {
+            const className = getClassName(path);
+            style = definition[className] || getFromCache(className, namespace);
+          } else {
+            style = transform(path);
+          }
 
-        if (isClassName(p)) {
-          const style = getFromCache(getClassName(p), nameSpace);
+          stylesAcc.push(style);
+          return stylesAcc;
+        }, []);
 
-          // get style object from from styleSheet ID
-          stylesAcc.push(Stylesheet.flatten(style, nameSpace));
-          return;
-        }
-
-        stylesAcc.push(transform(p));
-      }, []);
+      definition[key] = flattenStyles(styles);
+    }
   }
 
-  styles = flattenStyles(styles, className);
-  setInCache(Stylesheet.create(styles), nameSpace);
+  setInCache(definition, namespace);
 };
 
-export const globalUse = (path, nameSpace) => {
+export const define = (definition, namespace) => {
+  let definitionNamespace = namespace;
+
+  if (!definitionNamespace) {
+    namespace = Symbol();
+  }
+
+  globalDefine(definition, definitionNamespace);
+
+  return definitionNamespace;
+};
+
+export const globalUse = (path, namespace) => {
   const styles = path
     .trim()
     .split(" ")
     .reduce((stylesAcc, p) => {
-      if (checkFalsey(p)) {
-        return;
+      if (isFalseyString(p)) {
+        return stylesAcc;
       }
 
       if (isClassName(p)) {
-        stylesAcc.push(getFromCache(getClassName(p), nameSpace));
-        return;
+        stylesAcc.push(getFromCache(getClassName(p), namespace));
+      } else {
+        stylesAcc.push(transform(p));
       }
 
-      stylesAcc.push(transform(p));
+      return stylesAcc;
     }, []);
 
   return styles;
 };
-
-export const namespace = (nameSpace) => ({
-  define: (path, className) => globalDefine(path, className, nameSpace),
-  use: (path) => globalUse(path, nameSpace),
-});
