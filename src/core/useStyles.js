@@ -1,38 +1,21 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { globalUse } from "./stylesPath";
+import { getPathFromLiteralTag } from "./utils";
 
-// create local cache for returned arrays, so we can avoid re-renders
-const localCache = Object.create(null);
-
-// namespace should be a symbol exported from the styles
 export default (nameSpace) => {
-  // TODO: is concurrency safe (?) is expensive (?)
-  const uid = useRef(Date.now().toString());
+  // create local cache for returned arrays, so we can avoid re-renders and re-transformations
+  const localCache = useMemo(() => Object.create(null), []);
 
-  useEffect(() => {
-    return () => {
-      delete localCache[uid.current];
-    };
-  }, []);
+  return useCallback((strings, ...expressions) => {
+    const path = getPathFromLiteralTag(strings, expressions);
 
-  const cs = useCallback((strings, ...expressions) => {
-    const path = strings.reduce(
-      (result, currentString, i) =>
-        `${result}${currentString}${expressions[i] ? expressions[i] : ""}`,
-      ""
-    );
-
-    if (!localCache[uid.current]) {
-      localCache[uid.current] = Object.create(null);
-    } else if (localCache[uid.current][path]) {
-      return localCache[uid.current][path];
+    if (localCache[path]) {
+      return localCache[path];
     }
 
     const styles = globalUse(path, nameSpace);
-    Object.assign(localCache[uid.current], { [path]: styles });
+    Object.assign(localCache, { [path]: styles });
 
     return styles;
   }, []);
-
-  return cs;
 };

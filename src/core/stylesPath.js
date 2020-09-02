@@ -2,12 +2,8 @@
 // TODO: check if there are collisions between keys and values as
 // fl:dir:row:1 could be 'flexDirection: row 1' and 'flexDirectionRow: 1' (?)
 // TODO: validate props and values (?)
-// TODO: View, Text, Touchable, etc wrappers; so you use className prop instead of styles={p(...)}
-// add "#namespace .class1 .class2" or { View, Text } = nameSpacedComponent('namespace');
-// maybe using
-// TODO: Conditional classes as with cn(...)
 // TODO: add errors; inexistent-namespace when get cache, undefined-path or not key-value present, invalid-key, undefiend-classname
-import Stylesheet from "react-native";
+import { StyleSheet } from "react-native";
 import {
   isFalseyString,
   isClassName,
@@ -17,6 +13,21 @@ import {
 import transform from "./pathTransform";
 
 const globalCache = Object.create(null);
+
+const setInCache = (definition, namespace) => {
+  // TODO: check whether using Stylesheet is more performant or not
+  const nativeCache = StyleSheet.create(definition);
+
+  if (!namespace) {
+    Object.assign(globalCache, nativeCache);
+  } else {
+    if (!globalCache[namespace]) {
+      globalCache[namespace] = Object.create(null);
+    }
+
+    Object.assign(globalCache[namespace], nativeCache);
+  }
+};
 
 const getFromCache = (className, namespace) => {
   let style;
@@ -30,29 +41,15 @@ const getFromCache = (className, namespace) => {
   }
 
   // get style from stylesheet id
-  return Stylesheet.flatten(style);
-};
-
-const setInCache = (definition, namespace) => {
-  const nativeCache = Stylesheet.create(definition);
-
-  if (!namespace) {
-    Object.assign(globalCache, nativeCache);
-  } else {
-    if (!globalCache[namespace]) {
-      globalCache[namespace] = Object.create(null);
-    }
-
-    Object.assign(globalCache[namespace], nativeCache);
-  }
+  return StyleSheet.flatten(style);
 };
 
 export const globalDefine = (definition, namespace) => {
   for (let [key, value] of Object.entries(definition)) {
-    if (typeof value !== "object") {
+    if (typeof value !== 'object') {
       const styles = value
         .trim()
-        .split(" ")
+        .split(' ')
         .reduce((stylesAcc, path) => {
           let style;
 
@@ -89,7 +86,7 @@ export const define = (definition, namespace) => {
 export const globalUse = (path, namespace) => {
   const styles = path
     .trim()
-    .split(" ")
+    .split(' ')
     .reduce((stylesAcc, p) => {
       if (isFalseyString(p)) {
         return stylesAcc;

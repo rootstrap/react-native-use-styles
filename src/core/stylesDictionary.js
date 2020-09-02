@@ -1,6 +1,5 @@
 // SOURCE: https://github.com/facebook/react-native/blob/d2045411f5771a8c7275c1388179fef3892e9f53/Libraries/Components/View/ReactNativeViewViewConfig.js
 // TODO: remove prototype from inner objects (?)
-// TODO: add and export symbols for aliases (?)
 export default Object.assign(Object.create(null), {
   align: {
     content: { __propName: "alignContent" },
@@ -69,7 +68,7 @@ export default Object.assign(Object.create(null), {
     variant: { __propName: "fontVariant" },
     weight: { __propName: "fontWeight" },
   },
-  height: "height",
+  height: { __propName: "height" },
   include: { font: { padding: { __propName: "includeFontPadding" } } },
   justify: { content: { __propName: "justifyContent" } },
   left: { __propName: "left" },

@@ -9,4 +9,5 @@ export default Object.assign(Object.create(null), {
   fx: "flex",
   lt: "left",
   rt: "right",
+  bg: 'background',
 });
