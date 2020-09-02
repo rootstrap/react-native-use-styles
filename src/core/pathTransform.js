@@ -1,7 +1,7 @@
 import stylesDictionary from "./stylesDictionary";
 import aliasesDictionary from "./aliasesDictionary";
 
-export const separator = ':';
+export const separator = ":";
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
@@ -12,7 +12,7 @@ const getKeyFromParts = (node, parts, pos) => {
 
 const getValueFromParts = (parts, pos) => {
   let newPos = pos;
-  let value = '';
+  let value = "";
 
   while (newPos < parts.length) {
     let newValue = parts[newPos];

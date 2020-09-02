@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from "react";
-import { globalUse } from "./stylesPath";
+import { GlobalUse } from "./stylesManager";
 import { getPathFromLiteralTag } from "./utils";
 
 export default (nameSpace) => {
@@ -13,7 +13,7 @@ export default (nameSpace) => {
       return localCache[path];
     }
 
-    const styles = globalUse(path, nameSpace);
+    const styles = GlobalUse(path, nameSpace);
     Object.assign(localCache, { [path]: styles });
 
     return styles;
