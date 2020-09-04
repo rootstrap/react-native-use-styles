@@ -1,7 +1,7 @@
 {
   "name": "react-native-use-styles",
   "version": "1.0.0",
-  "description": "React Native Use Styles",
+  "description": "React Native useStyles",
   "main": "lib/index.js",
   "module": "src/index.js",
   "files": [

@@ -6,12 +6,12 @@
 
 #### A classy approach.
 
-Did you ever wanted to organize your styles properly? This library contains an easy to use API that lets you organize your styles in a classy way.
+Did you ever want to organize your styles properly? This library contains an easy to use API that lets you organize your styles in a classy way.
 
 ## Installation
 
 ```
-npm install @rootstrap/react-native-use-styles --save
+npm install react-native-use-styles --save
 ```
 
 ## Usage
@@ -22,11 +22,22 @@ npm install @rootstrap/react-native-use-styles --save
 import { GlobalStyles } from "react-native-use-styles";
 
 GlobalStyles({
-  global: "fx:1 fx:dir:row"
+  global: "flex:1 fx:dir:row"
 });
 ```
 
-Note that we are using aliases for the styles. You can use classic object notation if you want to.
+Note that we are using aliases for the styles. This is equivalent to do:
+
+```js
+import { GlobalStyles } from "react-native-use-styles";
+
+GlobalStyles({
+  global: {
+    flex: 1,
+    flexDirection: "row"
+  },
+});
+```
 
 ### Namespaced styles
 
@@ -39,7 +50,7 @@ export default Styles({
 });
 ```
 
-Note that we are exporting the result of our definition. We'll use it next.
+Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles' keys. Note that we are exporting the result of our definition. We'll use it next.
 
 ### Using styles
 
@@ -59,13 +70,34 @@ const component = () ⇒ {
 
 Note that we are classy now, and nobody would deny it.
 
-More info in [User Guide](USER_GUIDE.md)
+There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
 ## Performance
 
-This library was created with performance in mind. In summary, useStyles has multiple cache layers to avoid unnecessary renders, calculations and transformations.
+This library was created with performance in mind. In summary, useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations.
 
 ## Contributing
+
+We plan to keep working in the library to optimize and add new features (contributions are welcome):
+
+- Complete testing
+- Add path variables
+- Add informative errors
+- Benchmark
+- Improve dynamic styling.
+- Add Components with className:
+```js
+import namespace from './my-namespaced-styles';
+const { Text } = namespace;
+
+const component = () ⇒ {
+	return (
+		<Text className=".global-style .local-style">
+			Hello World!
+		</Text>
+	);
+}
+```
 
 If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
 
