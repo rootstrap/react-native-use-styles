@@ -33,13 +33,18 @@ export default Styles({
 #### Full list of aliases (we'll add more)
 
 ```js
-"bot" = "bottom",
-"col" = "column",
-"dir" = "direction",
-"fx" = "flex",
-"lt" = "left",
-"rt" = "right",
-"bg" = "background"
+"bot"  =  "bottom"
+"col"  =  "column"
+"dir"  =  "direction"
+"fx"   =  "flex"
+"lt"   =  "left"
+"rt"   =  "right"
+"bg"   =  "background"
+"txt"  =  "text"
+"jf"   =  "justify"
+"pd"   =  "padding"
+"wd"   =  "width"
+"hg"   =  "height"
 ```
 
 ### Dynamic styling
@@ -187,7 +192,7 @@ You can change the separator used in the styles' definitions.
 
 ### Definition order
 
-All style definitions reused in other style definitions must be defined before; otherwise, you will end up with an undefined style.
+All style definitions reused in other style definitions must be defined (imported) before; otherwise, you will end up with an undefined style. You cannot use styles of something that is not yet defined.
 
 Let's take this example:
 
@@ -195,8 +200,22 @@ Let's take this example:
 import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: ".global @sample.reused color:purple"
+  purple: ".global color:purple"
 });
 ```
 
-This Styles definition needs .global and @sample.reused styles to be defined before. You cannot use styles of something that is not yet defined.
+This Styles definition needs .global style to be defined before. You cannot use styles of something that is not yet defined. In summary, import your global styles at the top of your `App.js` or your main entry point; before the imports of your custom or navigation component.
+
+App.js
+```js
+import './globalStyles'; // ultra safe zone
+import React from 'react';
+
+import CustomComponent from './CustomComponent';
+
+export default function App() {
+  return (
+    <CustomComponent />
+  );
+}
+```

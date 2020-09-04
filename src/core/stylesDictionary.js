@@ -124,7 +124,7 @@ export default Object.assign(Object.create(null), {
   start: { __propName: "start" },
   text: {
     align: {
-      __propName: "textAling",
+      __propName: "textAlign",
       vertical: { __propName: "textAlignVertical" }
     },
     decoration: {

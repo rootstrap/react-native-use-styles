@@ -39,6 +39,8 @@ GlobalStyles({
 });
 ```
 
+You should import your `GlobalStyles` at the top of you App.js or main entry point. Learn more in [User Guide](https://github.com/rootstrap/react-native-use-styles/blob/master/USER_GUIDE.md#definition-order).
+
 ### Namespaced styles
 
 ```js
@@ -72,6 +74,10 @@ Note that we are classy now, and nobody would deny it.
 
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
+## Definition order
+
+All style definitions reused in other style definitions must be defined (imported) before; otherwise, you will end up with an undefined style. You cannot use styles of something that is not yet defined.
+
 ## Performance
 
 This library was created with performance in mind; useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations.
@@ -85,6 +91,7 @@ We plan to keep working in the library to optimize and add new features (contrib
 - Improve dynamic styling
 - Add tests with renderers
 - Benchmark
+- Make library definition order safe (?)
 - Add Components with className:
 ```js
 import namespace from './my-namespaced-styles';
