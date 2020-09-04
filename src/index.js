@@ -1,3 +1,7 @@
 export { setSeparator } from "./core/pathTransform";
-export { default as useGlobalStyles } from "./core/useGlobalStyles";
-export { Styles, GlobalStyles, GlobalUse } from "./core/stylesManager";
+export {
+  Styles,
+  GlobalStyles,
+  GlobalUse,
+  useGlobalStyles
+} from "./core/stylesManager";
