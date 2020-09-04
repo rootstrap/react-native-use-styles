@@ -74,28 +74,28 @@ There are plenty more things you can do with useStyles, learn more in [User Guid
 
 ## Performance
 
-This library was created with performance in mind. In summary, useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations.
+This library was created with performance in mind; useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations.
 
 ## Contributing
 
 We plan to keep working in the library to optimize and add new features (contributions are welcome):
 
-- Complete testing
 - Add path variables
 - Add informative errors
+- Improve dynamic styling
+- Add tests with renderers
 - Benchmark
-- Improve dynamic styling.
 - Add Components with className:
 ```js
 import namespace from './my-namespaced-styles';
 const { Text } = namespace;
 
 const component = () ⇒ {
-	return (
-		<Text className=".global-style .local-style">
-			Hello World!
-		</Text>
-	);
+  return (
+    <Text className=".global-style .local-style">
+      Hello World!
+    </Text>
+  );
 }
 ```
 

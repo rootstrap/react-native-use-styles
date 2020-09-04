@@ -6,7 +6,7 @@ import {
   isFalseyString,
   flattenStyles,
   getPathFromLiteralTag
-} from "../utils";
+} from "../../src/core/utils";
 
 describe("utils", () => {
   it("fisClassName finds the class", async () => {

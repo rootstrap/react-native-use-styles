@@ -2,6 +2,11 @@ import { StyleSheet } from "react-native";
 
 const GLOBAL_KEY = "__global";
 let globalCache;
+
+export const clearCache = () => {
+  globalCache = Object.create(null);
+  globalCache[GLOBAL_KEY] = Object.create(null);
+};
 clearCache();
 
 export const setInCache = (definition, namespace) => {
@@ -32,9 +37,4 @@ export const getFromCache = (className, namespace) => {
 
   // get style from stylesheet id
   return StyleSheet.flatten(style);
-};
-
-export const clearCache = () => {
-  globalCache = Object.create(null);
-  globalCache[GLOBAL_KEY] = Object.create(null);
 };

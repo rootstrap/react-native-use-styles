@@ -23,7 +23,9 @@ const getValueFromParts = (parts, pos) => {
     newPos += 1;
   }
   value = value.substring(1);
-  value = parseFloat(value) || value;
+  if (value.indexOf(" ") === -1) {
+    value = parseFloat(value) || value;
+  }
 
   return [value, newPos];
 };

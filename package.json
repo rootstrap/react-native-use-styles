@@ -31,11 +31,6 @@
   "bugs": {
     "url": "https://github.com/@rootstrap/react-native-use-styles/issues"
   },
-  "jest": {
-    "testMatch": [
-      "**/__tests__/**/*.test.js"
-    ]
-  },
   "homepage": "https://github.com/@rootstrap/react-native-use-styles#readme",
   "dependencies": {},
   "devDependencies": {

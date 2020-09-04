@@ -119,23 +119,25 @@ const component = () ⇒ {
 
 If you are not going to use namespaced styles you can use `useGlobalStyles` to get your styles directly. Actually `useStyles` is a wrapper of `useGlobalStyles`, e.g: `useStyles = () => useGlobalStyles(definitionNamespace)`.
 
-### setSeparator
+### GlobalUse
 
 ```js
-import { setSeparator, GlobalStyles } from "react-native-use-styles";
+import { GlobalUse } from "react-native-use-styles";
 
-setSeparator('-')
-
-export default GlobalStyles({
-  purple: "fx-1 fx-direction-row"
-});
+const component = () ⇒ {
+  return (
+    <Text styles={GlobalUse('.global .local', 'namespace')}>
+      Hello World!
+    </Text>
+  );
+}
 ```
 
-You can change the separator used in the styles' definitions.
+If you don't want to use a hook, you can use directly the `GlobalUse` function to access the styles. You can pass a namespace as a parameter to get styles from a particular namespace. Be aware that this function is not using the component cache layer (more info about this layer in the next section). 
 
 ### Cache layers
 
-The library has 3 cache layers. The first one is at component level, this is mostly to avoid re-renders. Let's say we have the following component:
+The library has 3 cache layers; the first one is at component level, this is mostly to avoid re-renders. Let's say we have the following component:
 
 ```js
 import useStyles from "./my-namespaced-styles";
@@ -168,6 +170,20 @@ const component = () ⇒ {
 ```
 
 This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides in the form of numbers. These numbers are part of the third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API. This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them.
+
+### setSeparator
+
+```js
+import { setSeparator, GlobalStyles } from "react-native-use-styles";
+
+setSeparator('-')
+
+export default GlobalStyles({
+  purple: "fx-1 fx-direction-row"
+});
+```
+
+You can change the separator used in the styles' definitions.
 
 ### Definition order
 
