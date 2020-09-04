@@ -1,11 +1,12 @@
 import {
   isClassName,
-  getClassName,
+  getKey,
   getNamespace,
-  isNamespaceClass,
+  isNamespace,
   isFalseyString,
   flattenStyles,
-  getPathFromLiteralTag
+  getPathFromLiteralTag,
+  isConstant
 } from "../../src/core/utils";
 
 describe("utils", () => {
@@ -21,16 +22,16 @@ describe("utils", () => {
     expect(isClassName("fx:dir:row")).toBe(false);
   });
 
-  it("getClassName gets the class", async () => {
-    expect(getClassName(".local")).toBe("local");
+  it("getKeyFromPath gets the key", async () => {
+    expect(getKey(".local")).toBe("local");
   });
 
   it("isNamespaceClass finds the namespace", async () => {
-    expect(isNamespaceClass("@namespace.classname")).toBe(true);
+    expect(isNamespace("@namespace.classname")).toBe(true);
   });
 
   it("isNamespaceClass doesn't find the namespace", async () => {
-    expect(isNamespaceClass(".classname")).toBe(false);
+    expect(isNamespace(".classname")).toBe(false);
   });
 
   it("getNamespace gets the namespace", async () => {
@@ -60,5 +61,17 @@ describe("utils", () => {
     const expressions = ["World"];
     const expected = "Hello World!";
     expect(getPathFromLiteralTag(strings, expressions)).toBe(expected);
+  });
+
+  it("isConstant finds a constant", async () => {
+    expect(isConstant("$constant")).toBe(true);
+  });
+
+  it("isConstant doesn't find a constant", async () => {
+    expect(isConstant(".class")).toBe(false);
+  });
+
+  it("isConstant finds a namespaced constant", async () => {
+    expect(isConstant("@namespace$constant")).toBe(true);
   });
 });

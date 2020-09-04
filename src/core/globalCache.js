@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
 
-const GLOBAL_KEY = "__global";
 let globalCache;
+const GLOBAL_KEY = "__global";
+export const CONSTANTS_KEY = "constants";
 
 export const clearCache = () => {
   globalCache = Object.create(null);
@@ -9,32 +10,46 @@ export const clearCache = () => {
 };
 clearCache();
 
-export const setInCache = (definition, namespace) => {
-  // TODO: check whether using Stylesheet is more performant or not
-  const nativeCache = StyleSheet.create(definition);
-
-  if (!namespace) {
-    Object.assign(globalCache[GLOBAL_KEY], nativeCache);
-  } else {
-    if (!globalCache[namespace]) {
-      globalCache[namespace] = Object.create(null);
-    }
-
-    Object.assign(globalCache[namespace], nativeCache);
+const processDefinition = definition => {
+  const constants = definition.constants;
+  if (constants) {
+    definition.constants = null;
   }
+  const styles = StyleSheet.create(definition);
+
+  return { styles, constants };
 };
 
-export const getFromCache = (className, namespace) => {
-  let style;
+export const setInCache = (definition, namespace) => {
+  const { styles, constants } = processDefinition(definition);
+  let cache = globalCache;
 
-  if (!namespace) {
-    style = globalCache[GLOBAL_KEY][className];
+  if (namespace) {
+    if (!cache[namespace]) cache[namespace] = Object.create(null);
+    cache = cache[namespace];
   } else {
-    style =
-      (globalCache[namespace] && globalCache[namespace][className]) ||
-      globalCache[GLOBAL_KEY][className];
+    cache = cache[GLOBAL_KEY];
   }
 
-  // get style from stylesheet id
-  return StyleSheet.flatten(style);
+  // TODO: check whether using Stylesheet is more performant or not
+  Object.assign(cache, StyleSheet.create(styles));
+  Object.assign(cache, { constants });
+};
+
+export const getFromCache = (key, namespace, isConstant) => {
+  let cache = globalCache;
+
+  if (namespace && cache[namespace]) {
+    cache = cache[namespace];
+  } else {
+    cache = globalCache[GLOBAL_KEY];
+  }
+  if (isConstant) {
+    cache = cache[CONSTANTS_KEY];
+  }
+
+  let value = cache[key];
+
+  // if it's a style, get native style from cached id with flatten
+  return isConstant ? value : StyleSheet.flatten(value);
 };

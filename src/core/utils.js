@@ -1,15 +1,20 @@
 const CLASS_PREFIX = ".";
 const NAMESPACE_PREFIX = "@";
+const CONSTANTS_PREFIX = "$";
+const NAMESPACE_REGEX = new RegExp(`@[^${CLASS_PREFIX}${CONSTANTS_PREFIX}]+`);
 
 export const isClassName = path => path.startsWith(CLASS_PREFIX);
 
-export const getClassName = path =>
-  path.substring(path.indexOf(CLASS_PREFIX) + 1);
+export const getKey = path => path.substring(1);
 
-export const isNamespaceClass = path => path.startsWith(NAMESPACE_PREFIX);
+export const isNamespace = path => path.startsWith(NAMESPACE_PREFIX);
 
-export const getNamespace = path =>
-  path.substring(1, path.indexOf(CLASS_PREFIX));
+export const getKeyFromNamespace = path => path.replace(NAMESPACE_REGEX, "");
+
+export const getNamespace = path => path.match(NAMESPACE_REGEX)[0].substring(1);
+
+export const isConstant = path =>
+  getKeyFromNamespace(path).startsWith(CONSTANTS_PREFIX);
 
 export const StyleSheetNoop = {
   flatten: styles => styles,

@@ -1,7 +1,8 @@
 import stylesDictionary from "./stylesDictionary";
 import aliasesDictionary from "./aliasesDictionary";
+import { isConstant } from "./utils";
 
-export const separator = ":";
+export let separator = ":";
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
@@ -10,16 +11,20 @@ const getKeyFromParts = (node, parts, pos) => {
   return node[currentPart];
 };
 
-const getValueFromParts = (parts, pos) => {
+const getValueFromParts = (parts, pos, getConstant) => {
   let newPos = pos;
   let value = "";
 
   while (newPos < parts.length) {
     let newValue = parts[newPos];
-    newValue = aliasesDictionary[newValue] || newValue;
+
+    if (isConstant(newValue)) {
+      newValue = getConstant(newValue);
+    } else {
+      newValue = aliasesDictionary[newValue] || newValue;
+    }
 
     value += ` ${newValue}`;
-
     newPos += 1;
   }
   value = value.substring(1);
@@ -33,6 +38,12 @@ const getValueFromParts = (parts, pos) => {
 // PRECONDITION: at least one key-value pair exists in the path
 /* Use cases:
   input: "fx:1" // Done
+  output:
+  {
+    flex: 1
+  }
+
+  input: "color:$grey" // Done
   output:
   {
     flex: 1
@@ -57,11 +68,11 @@ const getValueFromParts = (parts, pos) => {
     flexDirection: row
   }
 */
-export default path => {
+export default (path, getConstant) => {
   let style = Object.create(null);
   const parts = path.split(separator);
 
-  // iterates until find a value, then iterates until find another key or until end
+  // iterates until find a value, then get values until end
   let currentNode = getKeyFromParts(stylesDictionary, parts, 0);
   let pos = 1;
   while (pos < parts.length) {
@@ -71,7 +82,7 @@ export default path => {
     // if it's an object we need to keep digging
     // otherwise is undefined cause we found a value
     if (!currentNode) {
-      const [value, newPos] = getValueFromParts(parts, pos, style);
+      const [value, newPos] = getValueFromParts(parts, pos, getConstant);
       pos = newPos;
 
       Object.assign(style, {
@@ -86,5 +97,5 @@ export default path => {
 };
 
 export const setSeparator = sp => {
-  SEPARATOR = sp;
+  separator = sp;
 };

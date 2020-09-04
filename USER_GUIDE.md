@@ -47,6 +47,21 @@ export default Styles({
 "hg"   =  "height"
 ```
 
+### Constants
+
+```js
+import { GlobalStyles } from "react-native-use-styles";
+
+GlobalStyles({
+  constants: {
+    purple: 'purple'
+  },
+  purple: "color:$purple"
+});
+```
+
+You can define constants in your global or namespaced styles that will be available to reuse with the `$` prefix.
+
 ### Dynamic styling
 
 ```js
@@ -100,11 +115,11 @@ const component = () ⇒ {
 import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: "@sample.purple"
+  anotherNamespace: "fx:1 @sample.purple"
 });
 ```
 
-Something to take into consideration is that the namespace @sample should be created before, otherwise it'll undefined.
+Something to take into consideration is that the namespace @sample should be defined (imported) before being used, otherwise it'll undefined.
 
 ### useGlobalStyles
 

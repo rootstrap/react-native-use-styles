@@ -7,16 +7,35 @@
 // maybe we can defer the definition if it's undefined until usage
 import { useMemo, useCallback } from "react";
 import transform from "./pathTransform";
-import { getFromCache, setInCache } from "./globalCache";
+import { getFromCache, setInCache, CONSTANTS_KEY } from "./globalCache";
 import {
   isFalseyString,
   isClassName,
-  getClassName,
-  isNamespaceClass,
+  getKey,
+  isNamespace,
+  getKeyFromNamespace,
   getNamespace,
+  isConstant,
   flattenStyles,
   getPathFromLiteralTag
 } from "./utils";
+
+export const getConstant = (pKey, namespace, definition) => {
+  let space = namespace;
+  let key = pKey;
+  if (isNamespace(key)) {
+    space = getNamespace(key);
+    key = getKeyFromNamespace(key);
+  }
+  key = getKey(key);
+
+  return (
+    (definition &&
+      definition[CONSTANTS_KEY] &&
+      definition[CONSTANTS_KEY][key]) ||
+    getFromCache(key, space, true)
+  );
+};
 
 export const GlobalUse = (path, namespace) => {
   const styles = path
@@ -27,13 +46,18 @@ export const GlobalUse = (path, namespace) => {
         return stylesAcc;
       }
 
+      let key = path;
+      let space = namespace;
+      if (isNamespace(key)) {
+        key = getKeyFromNamespace(key);
+        space = getNamespace(key);
+      }
+
       let style;
-      if (isClassName(p)) {
-        style = getFromCache(getClassName(p), namespace);
-      } else if (isNamespaceClass(p)) {
-        style = getFromCache(getClassName(p), getNamespace(p));
+      if (isClassName(key)) {
+        style = getFromCache(getKey(key), space);
       } else {
-        style = transform(p);
+        style = transform(key, key => getConstant(key, space));
       }
 
       stylesAcc.push(style);
@@ -63,19 +87,30 @@ export const useGlobalStyles = nameSpace => {
 
 export const GlobalStyles = (definition, namespace) => {
   for (let [key, value] of Object.entries(definition)) {
-    if (typeof value !== "object") {
+    if (typeof value !== "object" && !isConstant(key)) {
       const styles = value
         .trim()
         .split(" ")
         .reduce((stylesAcc, path) => {
+          if (isFalseyString(path)) {
+            return stylesAcc;
+          }
+
+          let key = path;
+          let space = namespace;
+          if (isNamespace(key)) {
+            key = getKeyFromNamespace(key);
+            space = getNamespace(key);
+          }
+
           let style;
-          if (isClassName(path)) {
-            const className = getClassName(path);
-            style = definition[className] || getFromCache(className, namespace);
-          } else if (isNamespaceClass(path)) {
-            style = getFromCache(getClassName(path), getNamespace(path));
+          if (isClassName(key)) {
+            const className = getKey(key);
+            style = getConstant(className, space, definition);
           } else {
-            style = transform(path);
+            style = transform(path, key =>
+              getConstant(key, namespace, definition)
+            );
           }
 
           stylesAcc.push(style);

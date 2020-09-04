@@ -1,4 +1,6 @@
 import transform from "../../src/core/pathTransform";
+import { setInCache, clearCache } from "../../src/core/globalCache";
+import { getConstant } from "../../src/core/stylesManager";
 
 describe("utils", () => {
   it("transforms key:value path", async () => {
@@ -44,6 +46,35 @@ describe("utils", () => {
   it("transforms aliases for key:value", async () => {
     expect(transform("fx:dir:col")).toMatchObject({
       flexDirection: "column"
+    });
+  });
+
+  it("transforms constants for key:$constant", async () => {
+    clearCache();
+    setInCache({
+      constants: {
+        purple: "purple"
+      }
+    });
+    expect(transform("color:$purple", key => getConstant(key))).toMatchObject({
+      color: "purple"
+    });
+  });
+
+  it("transforms constants for key:@namespace$constant", async () => {
+    clearCache();
+    setInCache(
+      {
+        constants: {
+          purple: "purple"
+        }
+      },
+      "namespace"
+    );
+    expect(
+      transform("color:@namespace$purple", key => getConstant(key))
+    ).toMatchObject({
+      color: "purple"
     });
   });
 });

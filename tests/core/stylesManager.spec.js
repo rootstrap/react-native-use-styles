@@ -23,6 +23,15 @@ describe("utils", () => {
     expect(getFromCache("local", "namespace")).toMatchObject({ flex: 1 });
   });
 
+  it("GlobalStyles sets constants cache properly", async () => {
+    GlobalStyles({
+      constants: {
+        red: "red"
+      }
+    });
+    expect(getFromCache("red", null, true)).toBe("red");
+  });
+
   it("Styles sets namespace and cache properly", async () => {
     const hook = Styles({
       local: { flex: 1 }
@@ -38,6 +47,18 @@ describe("utils", () => {
       "namespace"
     );
     expect(getFromCache("local", "namespace")).toMatchObject({ flex: 1 });
+  });
+
+  it("Styles sets constants cache properly", async () => {
+    Styles(
+      {
+        constants: {
+          red: "red"
+        }
+      },
+      "namespace"
+    );
+    expect(getFromCache("red", "namespace", true)).toBe("red");
   });
 
   it("GlobalUse gets global cache properly", async () => {
@@ -59,5 +80,59 @@ describe("utils", () => {
 
   it("GlobalUse generates path styles properly", async () => {
     expect(GlobalUse("max:height:300")[0]).toMatchObject({ maxHeight: 300 });
+  });
+
+  it("GlobalUse gets constant definition properly", async () => {
+    Styles(
+      {
+        constants: {
+          blue: "blue"
+        },
+        local: "color:$blue"
+      },
+      "namespace"
+    );
+    expect(GlobalUse(".local", "namespace")[0]).toMatchObject({
+      color: "blue"
+    });
+  });
+
+  it("GlobalUse gets constant from global cache properly", async () => {
+    GlobalStyles({
+      constants: {
+        blue: "blue"
+      }
+    });
+    expect(GlobalUse("color:$blue")[0]).toMatchObject({
+      color: "blue"
+    });
+  });
+
+  it("GlobalUse gets constant cache properly", async () => {
+    Styles(
+      {
+        constants: {
+          blue: "blue"
+        }
+      },
+      "namespace"
+    );
+    expect(GlobalUse("color:$blue", "namespace")[0]).toMatchObject({
+      color: "blue"
+    });
+  });
+
+  it("GlobalUse gets namespaced constant cache properly", async () => {
+    Styles(
+      {
+        constants: {
+          blue: "blue"
+        }
+      },
+      "namespace"
+    );
+    expect(GlobalUse("color:@namespace$blue", "namespace")[0]).toMatchObject({
+      color: "blue"
+    });
   });
 });

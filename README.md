@@ -88,13 +88,12 @@ This library was created with performance in mind; useStyles has multiple cache 
 
 We plan to keep working in the library to optimize and add new features (contributions are welcome):
 
-- Add path variables
 - Add informative errors
 - Improve dynamic styling
 - Add tests with renderers
 - Benchmark
 - Make library definition order safe (?)
-- Add Components with className:
+- Add Components with className (?)
 ```js
 import namespace from './my-namespaced-styles';
 const { Text } = namespace;
@@ -112,10 +111,10 @@ If you have an idea that could make this library better we would love to hear it
 
 ## License
 
-**@rootstrap/react-native-use-styles** is available under the MIT license. See the LICENSE file for more info.
+**react-native-use-styles** is available under the MIT license. See the LICENSE file for more info.
 
 ## Credits
 
-**@rootstrap/react-native-use-styles** is maintained by [Rootstrap](http://www.rootstrap.com) with the help of our [contributors](https://github.com/rootstrap/react-native-use-styles/contributors).
+**react-native-use-styles** is maintained by [Rootstrap](http://www.rootstrap.com) with the help of our [contributors](https://github.com/rootstrap/react-native-use-styles/contributors).
 
 [<img src="https://s3-us-west-1.amazonaws.com/rootstrap.com/img/rs.png" width="100"/>](http://www.rootstrap.com)

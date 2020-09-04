@@ -24,7 +24,8 @@
     "react-native",
     "styles",
     "namespace",
-    "hooks"
+    "hooks",
+    "class"
   ],
   "author": "Agustín Prieto <agustin@rootstrap.com>",
   "license": "MIT",
