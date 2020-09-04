@@ -16,8 +16,27 @@ npm install react-native-use-styles --save
 
 ## Usage
 
+### Using styles
+
+```js
+import useStyles from "./my-namespaced-styles";
+
+const component = () ⇒ {
+  const s = useStyles();
+
+  return (
+    <Text styles={s`.global .namespaced`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+Note that we are classy now, and nobody would deny it. Next we'll define our `.global` and `.namespaced` style to use them in our components as we are doing in this example.
+
 ### Global styles
 
+`global-styles.js`
 ```js
 import { GlobalStyles } from "react-native-use-styles";
 
@@ -26,7 +45,7 @@ GlobalStyles({
 });
 ```
 
-Note that we are using aliases for the styles. This is equivalent to do:
+We are using aliases or shortcuts to define our styles. This is equivalent to do:
 
 ```js
 import { GlobalStyles } from "react-native-use-styles";
@@ -39,38 +58,21 @@ GlobalStyles({
 });
 ```
 
-You should import your `GlobalStyles` at the top of you App.js or main entry point. Learn more in [User Guide](https://github.com/rootstrap/react-native-use-styles/blob/master/USER_GUIDE.md#definition-order).
+You should import your `GlobalStyles` at the top of you `App.js` or main entry point. Learn more in [User Guide](https://github.com/rootstrap/react-native-use-styles/blob/master/USER_GUIDE.md#definition-order).
 
 ### Namespaced styles
 
+`my-namespaced-styles.js`
 ```js
 import { Styles } from "react-native-use-styles";
 
 export default Styles({
   reused: "bg:color:green",
-  local: ".global .reused color:purple"
+  namespaced: ".global .reused color:purple"
 });
 ```
 
-Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles' keys. Note that we are exporting the result of our definition. We'll use it next.
-
-### Using styles
-
-```js
-import useStyles from "./my-namespaced-styles";
-
-const component = () ⇒ {
-  const s = useStyles();
-
-  return (
-    <Text styles={s`.global .local`}>
-      Hello World!
-    </Text>
-  );
-}
-```
-
-Note that we are classy now, and nobody would deny it.
+Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles. Note that we are exporting the result of our namespaced definition. 
 
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
