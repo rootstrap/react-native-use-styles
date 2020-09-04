@@ -2,7 +2,7 @@ import { useMemo, useCallback } from "react";
 import { GlobalUse } from "./stylesManager";
 import { getPathFromLiteralTag } from "./utils";
 
-export default (nameSpace) => {
+export default nameSpace => {
   // create local cache for returned arrays, so we can avoid re-renders and re-transformations
   const localCache = useMemo(() => Object.create(null), []);
 

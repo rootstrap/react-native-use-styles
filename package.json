@@ -10,7 +10,8 @@
     "README.md"
   ],
   "scripts": {
-    "test": "jest tests",
+    "test": "jest --verbose",
+    "test:watch": "jest --verbose --watch",
     "build": "rollup -c",
     "prepare": "rollup -c"
   },
@@ -30,14 +31,18 @@
   "bugs": {
     "url": "https://github.com/@rootstrap/react-native-use-styles/issues"
   },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
+  },
   "homepage": "https://github.com/@rootstrap/react-native-use-styles#readme",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "babel-jest": "^25.1.0",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react-hooks": "^2.2.0",

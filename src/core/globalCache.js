@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
 const GLOBAL_KEY = "__global";
-const globalCache = Object.create(null);
-globalCache[GLOBAL_KEY] = Object.create(null);
+let globalCache;
+clearCache();
 
 export const setInCache = (definition, namespace) => {
   // TODO: check whether using Stylesheet is more performant or not
@@ -32,4 +32,9 @@ export const getFromCache = (className, namespace) => {
 
   // get style from stylesheet id
   return StyleSheet.flatten(style);
+};
+
+export const clearCache = () => {
+  globalCache = Object.create(null);
+  globalCache[GLOBAL_KEY] = Object.create(null);
 };

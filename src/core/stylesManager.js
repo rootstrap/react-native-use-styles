@@ -11,7 +11,7 @@ import {
   getClassName,
   isNamespaceClass,
   getNamespace,
-  flattenStyles,
+  flattenStyles
 } from "./utils";
 import transform from "./pathTransform";
 import useGlobalStyles from "./useGlobalStyles";

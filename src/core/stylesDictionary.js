@@ -4,7 +4,7 @@ export default Object.assign(Object.create(null), {
   align: {
     content: { __propName: "alignContent" },
     items: { __propName: "alignItems" },
-    self: { __propName: "alignSelf" },
+    self: { __propName: "alignSelf" }
   },
   aspect: { ratio: { __propName: "aspectRatio" } },
   backface: { visibility: { __propName: "backfaceVisibility" } },
@@ -16,25 +16,25 @@ export default Object.assign(Object.create(null), {
       left: { radius: { __propName: "borderBottomLeftRadius" } },
       right: { radius: { __propName: "borderBottomRightRadius" } },
       start: { radius: { __propName: "borderBottomStartRadius" } },
-      width: { __propName: "borderBottomWidth" },
+      width: { __propName: "borderBottomWidth" }
     },
     color: { __propName: "borderColor" },
     end: {
       color: { __propName: "borderEndColor" },
-      width: { __propName: "borderEndWidth" },
+      width: { __propName: "borderEndWidth" }
     },
     left: {
       color: { __propName: "borderLeftColor" },
-      width: { __propName: "borderLeftWidth" },
+      width: { __propName: "borderLeftWidth" }
     },
     radius: { __propName: "borderRadius" },
     right: {
       color: { __propName: "borderRightColor" },
-      width: { __propName: "borderRightWidth" },
+      width: { __propName: "borderRightWidth" }
     },
     start: {
       color: { __propName: "borderStartColor" },
-      width: { __propName: "borderStartWidth" },
+      width: { __propName: "borderStartWidth" }
     },
     style: { __propName: "borderStyle" },
     top: {
@@ -43,8 +43,8 @@ export default Object.assign(Object.create(null), {
       left: { radius: { __propName: "borderTopLeftRadius" } },
       right: { radius: { __propName: "borderTopRightRadius" } },
       start: { radius: { __propName: "borderTopStartRadius" } },
-      width: { __propName: "borderTopWidth" },
-    },
+      width: { __propName: "borderTopWidth" }
+    }
   },
   bottom: { __propName: "bottom" },
   color: { __propName: "color" },
@@ -59,14 +59,14 @@ export default Object.assign(Object.create(null), {
     direction: { __propName: "flexDirection" },
     grow: { __propName: "flexGrow" },
     shrink: { __propName: "flexShrink" },
-    wrap: { __propName: "flexWrap" },
+    wrap: { __propName: "flexWrap" }
   },
   font: {
     family: { __propName: "fontFamily" },
     size: { __propName: "fontSize" },
     style: { __propName: "fontStyle" },
     variant: { __propName: "fontVariant" },
-    weight: { __propName: "fontWeight" },
+    weight: { __propName: "fontWeight" }
   },
   height: { __propName: "height" },
   include: { font: { padding: { __propName: "includeFontPadding" } } },
@@ -83,15 +83,15 @@ export default Object.assign(Object.create(null), {
     right: { __propName: "marginRight" },
     start: { __propName: "marginStart" },
     top: { __propName: "marginTop" },
-    vertical: { __propName: "marginVertical" },
+    vertical: { __propName: "marginVertical" }
   },
   max: {
     height: { __propName: "maxHeight" },
-    width: { __propName: "maxWidth" },
+    width: { __propName: "maxWidth" }
   },
   min: {
     height: { __propName: "minHeight" },
-    width: { __propName: "minWidth" },
+    width: { __propName: "minWidth" }
   },
   opacity: { __propName: "opacity" },
   overflow: { __propName: "overflow" },
@@ -105,7 +105,7 @@ export default Object.assign(Object.create(null), {
     right: { __propName: "paddingRight" },
     start: { __propName: "paddingStart" },
     top: { __propName: "paddingTop" },
-    vertical: { __propName: "paddingVertical" },
+    vertical: { __propName: "paddingVertical" }
   },
   postion: { __propName: "position" },
   resize: { mode: { __propName: "resizeMode" } },
@@ -113,39 +113,39 @@ export default Object.assign(Object.create(null), {
   rotation: { __propName: "rotation" },
   scale: {
     x: { __propName: "scaleX" },
-    y: { __propName: "scaleY" },
+    y: { __propName: "scaleY" }
   },
   shadow: {
     color: { __propName: "shadowColor" },
     offset: { __propName: "shadowOffset" },
     opacity: { __propName: "shadowOpacity" },
-    radius: { __propName: "shadowRadius" },
+    radius: { __propName: "shadowRadius" }
   },
   start: { __propName: "start" },
   text: {
     align: {
       __propName: "textAling",
-      vertical: { __propName: "textAlignVertical" },
+      vertical: { __propName: "textAlignVertical" }
     },
     decoration: {
       color: { __propName: "textDecorationColor" },
       line: { __propName: "textDecorationLine" },
-      style: { __propName: "textDecorationStyle" },
+      style: { __propName: "textDecorationStyle" }
     },
     shadow: {
       color: { __propName: "textShadowColor" },
       offset: { __propName: "textShadowOffset" },
-      radius: { __propName: "textShadowRadius" },
+      radius: { __propName: "textShadowRadius" }
     },
-    transform: { __propName: "textTransform" },
+    transform: { __propName: "textTransform" }
   },
   tint: { color: { __propName: "tintColor" } },
   top: { __propName: "top" },
   transform: { __propName: "transform" }, //TODO: not supported, not primitive value, this receives an array
   translate: {
     x: { __propName: "translateX" },
-    y: { __propName: "translateY" },
+    y: { __propName: "translateY" }
   },
   width: { __propName: "width" },
-  z: { index: { __propName: "zIndex" } },
+  z: { index: { __propName: "zIndex" } }
 });

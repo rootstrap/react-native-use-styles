@@ -55,7 +55,7 @@ const getValueFromParts = (parts, pos) => {
     flexDirection: row
   }
 */
-export default (path) => {
+export default path => {
   let style = Object.create(null);
   const parts = path.split(separator);
 
@@ -73,7 +73,7 @@ export default (path) => {
       pos = newPos;
 
       Object.assign(style, {
-        [lastNode.__propName]: value,
+        [lastNode.__propName]: value
       });
     }
 
@@ -83,6 +83,6 @@ export default (path) => {
   return style;
 };
 
-export const setSeparator = (sp) => {
+export const setSeparator = sp => {
   SEPARATOR = sp;
 };
