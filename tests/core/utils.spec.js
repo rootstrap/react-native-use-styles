@@ -10,12 +10,12 @@ import {
 } from "../../src/core/utils";
 
 describe("utils", () => {
-  it("fisClassName finds the class", async () => {
+  it("isClassName finds the class", async () => {
     expect(isClassName(".classname")).toBe(true);
   });
 
-  it("fisClassName finds the class when is namespaced", async () => {
-    expect(isClassName("@namespace.classname")).toBe(false);
+  it("isClassName finds the class when is namespaced", async () => {
+    expect(isClassName("@namespace.classname")).toBe(true);
   });
 
   it("isClassName doesn't find the class", async () => {

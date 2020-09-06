@@ -36,31 +36,7 @@ const getValueFromParts = (parts, pos, getConstant) => {
 };
 
 // PRECONDITION: at least one key-value pair exists in the path
-/* Use cases:
-  input: "fx:1" // Done
-  output:
-  {
-    flex: 1
-  }
-
-  input: "color:$grey" // Done
-  output:
-  {
-    flex: 1
-  }
-
-  input: "fx:1:2" // Done
-  output:
-  {
-    flex: 1 2
-  }
-
-  input: "fx:dir:row" // Done
-  output:
-  {
-    flexDirection: 'row'
-  }
-
+/* TODO: Use case:
   input: "fx:1:2:dir:row"
   output:
   {
@@ -79,8 +55,7 @@ export default (path, getConstant) => {
     const lastNode = currentNode;
     currentNode = getKeyFromParts(currentNode, parts, pos);
 
-    // if it's an object we need to keep digging
-    // otherwise is undefined cause we found a value
+    // if it's an object we need to keep digging, otherwise is undefined cause we found a value
     if (!currentNode) {
       const [value, newPos] = getValueFromParts(parts, pos, getConstant);
       pos = newPos;

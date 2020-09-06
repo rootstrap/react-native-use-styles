@@ -3,27 +3,27 @@
 ### Path notation and aliases
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: "bg:color:purple"
+  purple: 'bg:color:purple'
 });
 ```
 
 When we use aliases or path notation, the library transforms these paths into valid styles object. This is equivalent to:
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: "background:color:purple"
+  purple: 'background:color:purple'
 });
 ```
 
 And equivalent to:
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
   purple: {
@@ -32,42 +32,10 @@ export default Styles({
 });
 ```
 
-#### Full list of aliases (we'll add more)
-
-```js
-"bot"  =  "bottom"
-"col"  =  "column"
-"dir"  =  "direction"
-"fx"   =  "flex"
-"lt"   =  "left"
-"rt"   =  "right"
-"bg"   =  "background"
-"txt"  =  "text"
-"jf"   =  "justify"
-"pd"   =  "padding"
-"wd"   =  "width"
-"hg"   =  "height"
-```
-
-### Constants
-
-```js
-import { GlobalStyles } from "react-native-use-styles";
-
-GlobalStyles({
-  constants: {
-    purple: 'purple'
-  },
-  reused: "color:$purple"
-});
-```
-
-You can define constants in your global or namespaced styles that will be available to reuse with the `$` prefix.
-
 ### Dynamic styling
 
 ```js
-import useStyles from "./my-namespaced-styles";
+import useStyles from './my-namespaced-styles';
 
 const component = () ⇒ {
   const isPurple = useState(true);
@@ -86,12 +54,12 @@ This is an example of how you would add conditionals to your styles.
 ### Styles namespace name
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 const namespace = 'sample';
 
 export default Styles({
-  purple: "color:purple"
+  purple: 'color:purple'
 }, namespace);
 ```
 
@@ -100,7 +68,7 @@ You can manually define the namespace name if you want, this is useful for parti
 ### Using another namespaced style
 
 ```js
-import useStyles from "./my-namespaced-styles";
+import useStyles from './my-namespaced-styles';
 
 const component = () ⇒ {
   const s = useStyles();
@@ -114,10 +82,10 @@ const component = () ⇒ {
 ```
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  anotherNamespace: "fx:1 @sample.purple"
+  anotherNamespace: 'fx:1 @sample.purple'
 });
 ```
 
@@ -126,7 +94,7 @@ Something to take into consideration is that the namespace @sample should be def
 ### useGlobalStyles
 
 ```js
-import { useGlobalStyles } from "react-native-use-styles";
+import { useGlobalStyles } from 'react-native-use-styles';
 
 const component = () ⇒ {
   const s = useGlobalStyles();
@@ -144,7 +112,7 @@ If you are not going to use namespaced styles you can use `useGlobalStyles` to g
 ### GlobalUse
 
 ```js
-import { GlobalUse } from "react-native-use-styles";
+import { GlobalUse } from 'react-native-use-styles';
 
 const component = () ⇒ {
   return (
@@ -162,7 +130,7 @@ If you don't want to use a hook, you can use directly the `GlobalUse` function t
 The library has 3 cache layers; the first one is at component level, this is mostly to avoid re-renders. Let's say we have the following component:
 
 ```js
-import useStyles from "./my-namespaced-styles";
+import useStyles from './my-namespaced-styles';
 
 const component = () ⇒ {
   const s = useStyles();
@@ -178,13 +146,13 @@ const component = () ⇒ {
 The `s` function will always return the same cached array, to avoid re-renders, and re-transformation for the `color:purple`. In this case, the result will be:
 
 ```js
-import useStyles from "./my-namespaced-styles";
+import useStyles from './my-namespaced-styles';
 
 const component = () ⇒ {
   const s = useStyles();
 
   return (
-    <Text styles={[{ ...global styles... }, { ...local styles... }, { color: purple }]}>
+    <Text styles={[{ ...global styles... }, { ...local styles... }, { color: 'purple' }]}>
       Hello World!
     </Text>
   );
@@ -196,43 +164,13 @@ This cache will be cleared once you unmount the component. The second cache laye
 ### setSeparator
 
 ```js
-import { setSeparator, GlobalStyles } from "react-native-use-styles";
+import { setSeparator, GlobalStyles } from 'react-native-use-styles';
 
 setSeparator('-')
 
 export default GlobalStyles({
-  purple: "fx-1 fx-direction-row"
+  purple: 'fx-1 fx-direction-row'
 });
 ```
 
 You can change the separator used in the styles' definitions.
-
-### Definition order
-
-All style definitions reused in other style definitions must be defined (imported) before; otherwise, you will end up with an undefined style. You cannot use styles of something that is not yet defined.
-
-Let's take this example:
-
-```js
-import { Styles } from "react-native-use-styles";
-
-export default Styles({
-  purple: ".global color:purple"
-});
-```
-
-This Styles definition needs .global style to be defined before. You cannot use styles of something that is not yet defined. In summary, import your global styles at the top of your `App.js` or your main entry point; before the imports of your custom or navigation component.
-
-App.js
-```js
-import './globalStyles'; // ultra safe zone
-import React from 'react';
-
-import CustomComponent from './CustomComponent';
-
-export default function App() {
-  return (
-    <CustomComponent />
-  );
-}
-```

@@ -6,5 +6,5 @@ GlobalStyles({
     clouds: '#ecf0f1',
     title: 40
   },
-  container: "bg:color:$midnight fx:1 jf:content:center"
+  container: "bg:color:$midnight fx:1 jf:content:center",
 });

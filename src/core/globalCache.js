@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 let globalCache;
 const GLOBAL_KEY = "__global";
-export const CONSTANTS_KEY = "constants";
+const CONSTANTS_KEY = "constants";
 
 export const clearCache = () => {
   globalCache = Object.create(null);
@@ -36,19 +36,41 @@ export const setInCache = (definition, namespace) => {
   Object.assign(cache, { constants });
 };
 
-export const getFromCache = (key, namespace, isConstant) => {
-  let cache = globalCache;
+export const getFromCache = (key, namespace, definition, isConstant) => {
+  let value;
 
-  if (namespace && cache[namespace]) {
-    cache = cache[namespace];
-  } else {
-    cache = globalCache[GLOBAL_KEY];
-  }
-  if (isConstant) {
-    cache = cache[CONSTANTS_KEY];
+  // if it's in definition
+  if (definition) {
+    let def = definition;
+
+    if (isConstant) {
+      def = def[CONSTANTS_KEY];
+    }
+
+    if (def && def[key]) return def[key];
   }
 
-  let value = cache[key];
+  // if it's in the namespace
+  if (namespace && globalCache[namespace]) {
+    let cache = globalCache[namespace];
+
+    if (isConstant) {
+      cache = cache[CONSTANTS_KEY];
+    }
+
+    value = cache && cache[key];
+  }
+
+  // if it's in the global cache
+  if (!value) {
+    let cache = globalCache[GLOBAL_KEY];
+
+    if (isConstant) {
+      cache = cache[CONSTANTS_KEY];
+    }
+
+    value = cache && cache[key];
+  }
 
   // if it's a style, get native style from cached id with flatten
   return isConstant ? value : StyleSheet.flatten(value);

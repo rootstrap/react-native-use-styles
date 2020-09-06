@@ -19,7 +19,7 @@ npm install react-native-use-styles --save
 ### Using styles
 
 ```js
-import useStyles from "./my-namespaced-styles";
+import useStyles from './my-namespaced-styles';
 
 const component = () ⇒ {
   const s = useStyles();
@@ -38,37 +38,35 @@ Note that we are classy now, and nobody would deny it. Next we'll define our `.g
 
 `global-styles.js`
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
-  global: "flex:1 fx:dir:row"
+  global: 'flex:1 fx:dir:row'
 });
 ```
 
 We are using aliases or shortcuts to define our styles. This is equivalent to do:
 
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
   global: {
     flex: 1,
-    flexDirection: "row"
+    flexDirection: 'row'
   },
 });
 ```
-
-You should import your `GlobalStyles` at the top of you `App.js` or main entry point. Learn more in [User Guide](https://github.com/rootstrap/react-native-use-styles/blob/master/USER_GUIDE.md#definition-order).
 
 ### Namespaced styles
 
 `my-namespaced-styles.js`
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  reused: "bg:color:green",
-  namespaced: ".global .reused color:purple"
+  reused: 'bg:color:green',
+  namespaced: '.global .reused color:purple'
 });
 ```
 
@@ -77,13 +75,13 @@ Namespaced styles are a way to isolate a group of styles for a particular part o
 ### Constants
 
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
   constants: {
     purple: 'purple'
   },
-  reused: "color:$purple"
+  reused: 'color:$purple'
 });
 ```
 
@@ -91,13 +89,46 @@ You can define constants in your global or namespaced styles that will be availa
 
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
-## Definition order
+### Definition order
 
-All style definitions reused in other style definitions must be defined (imported) before; otherwise, you will end up with an undefined style. You cannot use styles of something that is not yet defined.
+You want your global styles to be defined or imported before all the other styles. So just import your global styles at the top of your `App.js` or your main entry point; before the imports of your custom or navigation component.
 
-## Performance
+App.js
+```js
+import './globalStyles'; // ultra safe zone
+import React from 'react';
 
-This library was created with performance in mind; useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations.
+import CustomComponent from './CustomComponent';
+
+export default function App() {
+  return (
+    <CustomComponent />
+  );
+}
+```
+
+### List of aliases
+
+This is the current list of aliases available, we plan to add more.
+
+```js
+bot  =  bottom
+col  =  column
+dir  =  direction
+fx   =  flex
+lt   =  left
+rt   =  right
+bg   =  background
+txt  =  text
+jf   =  justify
+pd   =  padding
+wd   =  width
+hg   =  height
+```
+
+### Performance
+
+This library was created with performance in mind; useStyles has multiple cache layers to avoid unnecessary renders, calculations, and transformations. More info in the [User Guide](USER_GUIDE.md)
 
 ## Contributing
 
