@@ -1,3 +1,5 @@
+## User Guide
+
 ### Path notation and aliases
 
 ```js
@@ -56,7 +58,7 @@ GlobalStyles({
   constants: {
     purple: 'purple'
   },
-  purple: "color:$purple"
+  reused: "color:$purple"
 });
 ```
 

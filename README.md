@@ -74,6 +74,21 @@ export default Styles({
 
 Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles. Note that we are exporting the result of our namespaced definition. 
 
+### Constants
+
+```js
+import { GlobalStyles } from "react-native-use-styles";
+
+GlobalStyles({
+  constants: {
+    purple: 'purple'
+  },
+  reused: "color:$purple"
+});
+```
+
+You can define constants in your global or namespaced styles that will be available to reuse with the `$` prefix.
+
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
 ## Definition order

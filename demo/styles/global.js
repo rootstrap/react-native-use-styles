@@ -1,8 +1,10 @@
 import { GlobalStyles } from "react-native-use-styles";
 
 GlobalStyles({
-  $red: "#aaffff",
-  $blue: "#aaffff",
-  $green: "#aaffff",
-  container: "fx:1 jf:content:center bg:color:$red"
+  constants: {
+    midnight: '#2c3e50',
+    clouds: '#ecf0f1',
+    title: 40
+  },
+  container: "bg:color:$midnight fx:1 jf:content:center"
 });
