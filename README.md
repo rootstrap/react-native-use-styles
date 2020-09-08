@@ -136,7 +136,8 @@ We plan to keep working in the library to optimize and add new features (contrib
 
 - Add informative errors
 - Improve dynamic styling
-- Add tests with renderers
+- Add tests with test renderers
+- Add tests to a pre-push hook
 - Benchmark
 - Make library definition order safe (?)
 - Add Components with className (?)

@@ -7,8 +7,6 @@ import useStyles from './styles/namespaced';
 export default function App() {
   const s = useStyles();
 
-  console.log(s`.container`);
-
   return (
     <View style={s`.container`}>
       <Text style={s`.text`}>Hello Planet!</Text>

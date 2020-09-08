@@ -159,7 +159,7 @@ const component = () ⇒ {
 }
 ```
 
-This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides in the form of numbers. These numbers are part of the third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API. This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them.
+This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides. There's a third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API (actually this API seems not to be caching in recent versions). This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them. 
 
 ### setSeparator
 
