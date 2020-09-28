@@ -1,7 +1,4 @@
 // TODO: p(124235, 'fl-row') to send the identifier of a Stylesheet.create style
-// TODO: check if there are collisions between keys and values as
-// fl:dir:row:1 could be 'flexDirection: row 1' and 'flexDirectionRow: 1' (?)
-// TODO: add errors; inexistent-namespace when get cache, undefined-path or not key-value present, invalid-key, undefiend-classname
 import { useMemo, useCallback } from "react";
 import transform from "./pathTransform";
 import { getFromCache, setInCache } from "./globalCache";

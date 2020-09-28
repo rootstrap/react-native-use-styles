@@ -156,6 +156,14 @@ const component = () ⇒ {
 
 If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
 
+### How to run the demo app
+
+In order to contribute with some code you will need to test your changes within the demo app. At the moment the mechanism that we are using to test the lib inside the app is to import it locally. That means that:
+
+You need to install the dependencies on the library in production mode (`npm install --only=prod`) so you don't have problems with dual installations of react-native each time you make a change, you need to do a force install of the library inside the demo folder.
+
+If you are comfortable using something like [Wix's wml](https://github.com/wix/wml), it could provide a better development experience for you. We wanted the main contributing option to not require any extra installations or knowledge. Symlinks have not worked and that is why we recommend Wml.
+
 ## License
 
 **react-native-use-styles** is available under the MIT license. See the LICENSE file for more info.
