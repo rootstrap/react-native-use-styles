@@ -9,9 +9,13 @@
     "eslint:recommended",
     "plugin:prettier/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:react/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier",
+    "react",
+    "react-native"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -19,5 +23,6 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
-  }
+  },
+  "parser": "babel-eslint"
 }
