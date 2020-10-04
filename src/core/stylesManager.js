@@ -49,11 +49,8 @@ export const GlobalUse = (path, namespace) => {
           getFromDefinitionOrCache(key, namespace, null, true)
         );
       }
-
-      stylesAcc.push(style);
-      return stylesAcc;
-    }, []);
-
+      return { ...stylesAcc, ...style };
+    }, {});
   return styles;
 };
 

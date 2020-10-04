@@ -65,7 +65,7 @@ describe("utils", () => {
     GlobalStyles({
       global: { flex: 1 }
     });
-    expect(GlobalUse(".global")[0]).toMatchObject({ flex: 1 });
+    expect(GlobalUse(".global")).toMatchObject({ flex: 1 });
   });
 
   it("GlobalUse gets local cache properly", async () => {
@@ -75,11 +75,11 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse(".local", "namespace")[0]).toMatchObject({ flex: 1 });
+    expect(GlobalUse(".local", "namespace")).toMatchObject({ flex: 1 });
   });
 
   it("GlobalUse generates path styles properly", async () => {
-    expect(GlobalUse("max:height:300")[0]).toMatchObject({ maxHeight: 300 });
+    expect(GlobalUse("max:height:300")).toMatchObject({ maxHeight: 300 });
   });
 
   it("GlobalUse gets style from definition properly", async () => {
@@ -90,7 +90,7 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse(".reused", "namespace")[0]).toMatchObject({
+    expect(GlobalUse(".reused", "namespace")).toMatchObject({
       color: "blue"
     });
   });
@@ -105,7 +105,7 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse(".local", "namespace")[0]).toMatchObject({
+    expect(GlobalUse(".local", "namespace")).toMatchObject({
       color: "blue"
     });
   });
@@ -116,7 +116,7 @@ describe("utils", () => {
         blue: "blue"
       }
     });
-    expect(GlobalUse("color:$blue")[0]).toMatchObject({
+    expect(GlobalUse("color:$blue")).toMatchObject({
       color: "blue"
     });
   });
@@ -127,7 +127,7 @@ describe("utils", () => {
         blue: "blue"
       }
     });
-    expect(GlobalUse("color:$blue", "namespace")[0]).toMatchObject({
+    expect(GlobalUse("color:$blue", "namespace")).toMatchObject({
       color: "blue"
     });
   });
@@ -145,7 +145,7 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse(".namespaced", "namespace")[0]).toMatchObject({
+    expect(GlobalUse(".namespaced", "namespace")).toMatchObject({
       color: "blue"
     });
   });
@@ -159,7 +159,7 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse("color:$blue", "namespace")[0]).toMatchObject({
+    expect(GlobalUse("color:$blue", "namespace")).toMatchObject({
       color: "blue"
     });
   });
@@ -173,30 +173,30 @@ describe("utils", () => {
       },
       "namespace"
     );
-    expect(GlobalUse("color:@namespace$blue", "namespace")[0]).toMatchObject({
+    expect(GlobalUse("color:@namespace$blue", "namespace")).toMatchObject({
       color: "blue"
     });
   });
 
   it("GlobalUse with falsey value false", async () => {
-    expect(GlobalUse("color:red false")[0]).toMatchObject({
+    expect(GlobalUse("color:red false")).toMatchObject({
       color: "red"
     });
   });
 
   it("GlobalUse with falsey value undefined", async () => {
-    expect(GlobalUse("color:red undefined")[0]).toMatchObject({
+    expect(GlobalUse("color:red undefined")).toMatchObject({
       color: "red"
     });
   });
 
   it("GlobalUse with only falsey value undefined", async () => {
-    expect(GlobalUse("color:red null")[0]).toMatchObject({
+    expect(GlobalUse("color:red null")).toMatchObject({
       color: "red"
     });
   });
 
   it("GlobalUse with only falsey value", async () => {
-    expect(GlobalUse("undefined")).toHaveLength(0);
+    expect(GlobalUse("undefined")).toMatchObject({});
   });
 });
