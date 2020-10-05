@@ -15,7 +15,8 @@
   "plugins": [
     "prettier",
     "react",
-    "react-native"],
+    "react-native"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
