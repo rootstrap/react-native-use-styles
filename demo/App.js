@@ -8,7 +8,7 @@ export default function App() {
   const s = useStyles();
 
   return (
-    <View style={s`.container`}>
+    <View style={[s`.container`]}>
       <Text style={s`.text`}>Hello Planet!</Text>
     </View>
   );
