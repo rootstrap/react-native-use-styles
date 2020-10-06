@@ -1,9 +1,12 @@
 import { clearCache, getFromCache } from "../../src/core/globalCache";
 import { GlobalStyles, Styles, GlobalUse } from "../../src/core/stylesManager";
 
+const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+
 describe("utils", () => {
   beforeEach(() => {
     clearCache();
+    consoleSpy.mockClear();
   });
 
   it("GlobalStyles sets in global cache properly", async () => {
@@ -199,4 +202,12 @@ describe("utils", () => {
   it("GlobalUse with only falsey value", async () => {
     expect(GlobalUse("undefined")).toMatchObject({});
   });
+
+  
+  it("Development mode only: GlobalUse produces a console.warn when providing a non-existent namespace", async () => {
+    GlobalUse("color:@not-a-namespace$blue");
+    expect(console.warn).toBeCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith('Non-Existent-Namespace: The following namespace does not exist or has not been imported: "not-a-namespace". You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.');
+  });
+
 });
