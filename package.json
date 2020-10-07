@@ -46,6 +46,7 @@
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^2.2.0",
     "eslint-plugin-react-native": "^3.10.0",
+    "husky": "^4.3.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "react": "^16.8.0",
@@ -58,7 +59,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
       "pre-push": "npm test && npm run lint"
     }
   }
