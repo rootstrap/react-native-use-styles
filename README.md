@@ -32,7 +32,7 @@ const component = () ⇒ {
 }
 ```
 
-Note that we are classy now, and nobody would deny it. Next we'll define our `.global` and `.namespaced` style to use them in our components as we are doing in this example.
+Note that we are classy now, and nobody would deny it. Next we'll define our `.global` and `.namespaced` styles to use them in our components as we are doing in this example.
 
 ### Global styles
 
