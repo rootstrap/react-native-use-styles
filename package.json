@@ -4,6 +4,7 @@
   "description": "React Native useStyles",
   "main": "lib/index.js",
   "module": "src/index.js",
+  "types": "src/index.d.ts",
   "files": [
     "src",
     "lib",
@@ -13,7 +14,8 @@
     "test": "jest --verbose",
     "test:watch": "jest --verbose --watch",
     "build": "rollup -c",
-    "prepare": "rollup -c"
+    "prepare": "rollup -c",
+    "check:types": "tsc"
   },
   "repository": {
     "type": "git",
@@ -46,7 +48,8 @@
     "prettier": "^1.19.1",
     "react": "^16.8.0",
     "react-native": "^0.59.0",
-    "rollup": "^1.29.0"
+    "rollup": "^1.29.0",
+    "typescript": "^4.0.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",
