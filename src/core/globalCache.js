@@ -63,7 +63,7 @@ export const getFromCache = (key, namespace, definition, isConstant) => {
   else if (process.env.NODE_ENV !== 'production' && namespace && !globalCache[namespace]) {
     // rollup's plugin-replace will replace process.env.NODE_ENV above, resulting in 'production' !== 'production'
     // which will be removed by rollup's dead code elimination process.
-    // In other words, this entire if block only exists in testing and development mode
+    // In other words, this entire if-block will only exist in testing and development mode!
     console.warn(`Non-Existent-Namespace: The following namespace does not exist or has not been imported: "${namespace}". You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`) 
   }
 

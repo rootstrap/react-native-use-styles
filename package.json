@@ -10,7 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --silent",
     "test:watch": "jest --verbose --watch",
     "build": "rollup -c",
     "prepare": "rollup -c"
