@@ -15,6 +15,33 @@ import {
   getPathFromLiteralTag
 } from "./utils";
 
+export const getFromStorage = (
+  pKey,
+  namespace,
+  definition,
+  isConstant = false,
+  isComputed = false
+) => {
+  let space = namespace;
+  let key = pKey;
+
+  if (isNamespace(key)) {
+    space = getNamespace(key);
+    key = getKeyFromNamespace(key);
+  }
+  key = getKey(key);
+
+  return getFromCache(key, space, definition, isConstant, isComputed);
+};
+
+const constantsMutation = (styles, namespace, definition) => {
+  for (let [key, value] of Object.entries(styles)) {
+    if (isConstant(value)) {
+      styles[key] = getFromStorage(value, namespace, definition, true);
+    }
+  }
+}
+
 const recomputeMutation = (cache, dependencies) => {
   for (let [key, { compute }] of Object.entries(cache)) {
     if (hasComputed(key)) {
@@ -36,25 +63,6 @@ const computePath = (path, namespace, dependencies) => {
   const computedStyle = fn(dependencies);
   fn = GlobalUse(computedStyle, namespace);
   return fn(dependencies);
-};
-
-export const getFromStorage = (
-  pKey,
-  namespace,
-  definition,
-  isConstant = false,
-  isComputed = false
-) => {
-  let space = namespace;
-  let key = pKey;
-
-  if (isNamespace(key)) {
-    space = getNamespace(key);
-    key = getKeyFromNamespace(key);
-  }
-  key = getKey(key);
-
-  return getFromCache(key, space, definition, isConstant, isComputed);
 };
 
 export const GlobalUse = (path, namespace) => {
@@ -86,6 +94,8 @@ export const GlobalUse = (path, namespace) => {
 
           return { ...stylesAcc, ...style };
         }, {});
+    } else {
+      constantsMutation(styles, namespace);
     }
 
     return styles;
@@ -123,8 +133,9 @@ export const useGlobalStyles = (nameSpace, dependencies = []) => {
 export const GlobalStyles = (definition, namespace) => {
   for (let [key, value] of Object.entries(definition)) {
     // transform if it's not a style object, the constants object or the computeds object
-    if (typeof value !== "object") {
-      const styles = value
+    const styles = value;
+    if (typeof styles !== "object") {
+      styles
         .trim()
         .split(" ")
         .reduce((stylesAcc, path) => {
@@ -147,6 +158,8 @@ export const GlobalStyles = (definition, namespace) => {
         }, []);
 
       definition[key] = flattenStyles(styles);
+    } else {
+      constantsMutation(styles, namespace, definition);
     }
   }
 
