@@ -81,7 +81,8 @@ GlobalStyles({
   constants: {
     purple: 'purple'
   },
-  reused: 'color:$purple'
+  path: 'color:$purple',
+  object: { color: '$purple' }
 });
 ```
 
