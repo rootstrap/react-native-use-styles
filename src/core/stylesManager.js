@@ -4,6 +4,7 @@ import transform from "./pathTransform";
 import { getFromCache, setInCache } from "./globalCache";
 import {
   isFalseyString,
+  isConstant,
   isClassName,
   isComputed,
   hasComputed,
@@ -36,7 +37,7 @@ export const getFromStorage = (
 
 const constantsMutation = (styles, namespace, definition) => {
   for (let [key, value] of Object.entries(styles)) {
-    if (isConstant(value)) {
+    if (typeof value === 'string' && isConstant(value)) {
       styles[key] = getFromStorage(value, namespace, definition, true);
     }
   }
@@ -135,7 +136,7 @@ export const GlobalStyles = (definition, namespace) => {
     // transform if it's not a style object, the constants object or the computeds object
     const styles = value;
     if (typeof styles !== "object") {
-      styles
+      styles = styles
         .trim()
         .split(" ")
         .reduce((stylesAcc, path) => {
