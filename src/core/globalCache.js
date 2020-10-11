@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 let globalCache;
 const GLOBAL_KEY = "__global";
 const CONSTANTS_KEY = "constants";
+const COMPUTED_KEY = "computed";
 
 export const clearCache = () => {
   globalCache = Object.create(null);
@@ -12,16 +13,30 @@ clearCache();
 
 const processDefinition = definition => {
   const constants = definition.constants;
-  if (constants) {
-    definition.constants = null;
-  }
+  const computed = definition.computed;
+
+  definition.constants = null;
+  definition.computed = null;
+
   const styles = StyleSheet.create(definition);
 
-  return { styles, constants };
+  return { styles, constants, computed };
+};
+
+const getValueFromStorageObject = (key, object, isConstant, isComputed) => {
+  let obj = object;
+
+  if (isConstant) {
+    obj = obj[CONSTANTS_KEY];
+  } else if (isComputed) {
+    obj = obj[COMPUTED_KEY];
+  }
+
+  return obj && obj[key];
 };
 
 export const setInCache = (definition, namespace) => {
-  const { styles, constants } = processDefinition(definition);
+  const { styles, constants, computed } = processDefinition(definition);
   let cache = globalCache;
 
   if (namespace) {
@@ -31,47 +46,48 @@ export const setInCache = (definition, namespace) => {
     cache = cache[GLOBAL_KEY];
   }
 
-  // TODO: check whether using Stylesheet is more performant or not
   Object.assign(cache, StyleSheet.create(styles));
-  Object.assign(cache, { constants });
+  Object.assign(cache, {
+    [CONSTANTS_KEY]: constants,
+    [COMPUTED_KEY]: computed
+  });
 };
 
-export const getFromCache = (key, namespace, definition, isConstant) => {
+export const getFromCache = (
+  key,
+  namespace,
+  definition,
+  isConstant,
+  isComputed
+) => {
   let value;
 
   // if it's in definition
   if (definition) {
-    let def = definition;
-
-    if (isConstant) {
-      def = def[CONSTANTS_KEY];
-    }
-
-    if (def && def[key]) return def[key];
+    value = getValueFromStorageObject(key, definition, isConstant, isComputed);
+    if (value) return value;
   }
 
   // if it's in the namespace
   if (namespace && globalCache[namespace]) {
-    let cache = globalCache[namespace];
-
-    if (isConstant) {
-      cache = cache[CONSTANTS_KEY];
-    }
-
-    value = cache && cache[key];
+    value = getValueFromStorageObject(
+      key,
+      globalCache[namespace],
+      isConstant,
+      isComputed
+    );
   }
 
   // if it's in the global cache
   if (!value) {
-    let cache = globalCache[GLOBAL_KEY];
-
-    if (isConstant) {
-      cache = cache[CONSTANTS_KEY];
-    }
-
-    value = cache && cache[key];
+    value = getValueFromStorageObject(
+      key,
+      globalCache[GLOBAL_KEY],
+      isConstant,
+      isComputed
+    );
   }
 
   // if it's a style, get native style from cached id with flatten
-  return isConstant ? value : StyleSheet.flatten(value);
+  return isConstant || isComputed ? value : StyleSheet.flatten(value);
 };

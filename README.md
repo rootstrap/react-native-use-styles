@@ -89,6 +89,63 @@ You can define constants in your global or namespaced styles that will be availa
 
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
+### Computed and Dynamic styles
+
+#### Computed styles:
+```js
+import useStyles from './my-namespaced-styles';
+
+const component = () ⇒ {
+  const isPurple = useState(true);
+  const s = useStyles([isPurple]);
+
+  return (
+    <Text styles={s`fx:1 &purple`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+Computed styles are prefixed with the `&` character. Note that we are passing isPurple as a hook's dependency to track it changes. We can then use this dependency in our computed styles as following.
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  computed: {
+    purple: ([isPurple]) => ({ color: isPurple ? 'purple' : 'black' });
+  }
+});
+```
+If the dependencies change, only styles with a computed in it will be recomputed.
+
+#### Dynamic styles:
+```js
+import useStyles from './my-namespaced-styles';
+
+const component = () ⇒ {
+  const isPurple = useState(true);
+  const s = useStyles();
+
+  return (
+    <Text styles={s`fx:1 ${isPurple && '.purple'}`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+And a simple style definition as following:
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  purple: { color: 'purple' }
+});
+```
+
 ### Definition order
 
 You want your global styles to be defined or imported before all the other styles. So just import your global styles at the top of your `App.js` or your main entry point; before the imports of your custom or navigation component.
@@ -135,24 +192,11 @@ This library was created with performance in mind; useStyles has multiple cache 
 We plan to keep working in the library to optimize and add new features (contributions are welcome):
 
 - Add informative errors
-- Improve dynamic styling
 - Add tests with test renderers
 - Add tests to a pre-push hook
 - Benchmark
 - Make library definition order safe (?)
 - Add Components with className (?)
-```js
-import namespace from './my-namespaced-styles';
-const { Text } = namespace;
-
-const component = () ⇒ {
-  return (
-    <Text className=".global-style .local-style">
-      Hello World!
-    </Text>
-  );
-}
-```
 
 If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
 

@@ -6,10 +6,32 @@ import {
   isFalseyString,
   flattenStyles,
   getPathFromLiteralTag,
-  isConstant
+  isConstant,
+  isComputed,
+  hasComputed
 } from "../../src/core/utils";
 
 describe("utils", () => {
+  it("isComputed finds the computed", async () => {
+    expect(isComputed("&computed")).toBe(true);
+  });
+
+  it("isComputed finds the computed when is namespaced", async () => {
+    expect(isComputed("@namespace&isComputed")).toBe(true);
+  });
+
+  it("isComputed doesn't find the computed", async () => {
+    expect(isComputed("fx:dir:row")).toBe(false);
+  });
+
+  it("hasComputed finds the computed", async () => {
+    expect(hasComputed(".classname &computed")).toBe(true);
+  });
+
+  it("hasComputed doesn't find the computed", async () => {
+    expect(hasComputed("fx:dir:row")).toBe(false);
+  });
+
   it("isClassName finds the class", async () => {
     expect(isClassName(".classname")).toBe(true);
   });

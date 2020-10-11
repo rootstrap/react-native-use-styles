@@ -1,5 +1,8 @@
 import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  text: "color:$clouds font:size:$title txt:align:center"
+  computed: {
+    disabled: ([isDisabled]) => `color:${isDisabled ? '$disabled' : '$clouds'}`
+  },
+  centered: "txt:align:center"
 });

@@ -32,8 +32,38 @@ export default Styles({
 });
 ```
 
-### Dynamic styling
+### Computed and Dynamic styles
 
+#### Computed styles:
+```js
+import useStyles from './my-namespaced-styles';
+
+const component = () ⇒ {
+  const isPurple = useState(true);
+  const s = useStyles([isPurple]);
+
+  return (
+    <Text styles={s`fx:1 &purple`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+Computed styles are prefixed with the `&` character. Note that we are passing isPurple as a hook's dependency to track it changes. We can then use this dependency in our computed styles as following.
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  computed: {
+    purple: ([isPurple]) => ({ color: isPurple ? 'purple' : 'black' });
+  }
+});
+```
+If the dependencies change, only styles with a computed in it will be recomputed.
+
+#### Dynamic styles:
 ```js
 import useStyles from './my-namespaced-styles';
 
@@ -42,14 +72,22 @@ const component = () ⇒ {
   const s = useStyles();
 
   return (
-    <Text styles={s`fx:1 ${isPurple && 'color:purple'}`}>
+    <Text styles={s`fx:1 ${isPurple && '.purple'}`}>
       Hello World!
     </Text>
   );
 }
 ```
 
-This is an example of how you would add conditionals to your styles.
+And a simple styles definition as following:
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  purple: { color: 'purple' }
+});
+```
 
 ### Styles namespace name
 
