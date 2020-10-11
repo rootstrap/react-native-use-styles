@@ -168,6 +168,32 @@ describe("utils", () => {
     });
   });
 
+  it("GlobalUse gets global constant from style object properly", async () => {
+    GlobalStyles({
+      constants: {
+        blue: "blue"
+      }
+    });
+    expect(GlobalUse({ color: "$blue" }, "namespace")()).toMatchObject({
+      color: "blue"
+    });
+  });
+
+  it("GlobalUse gets constant from style object properly", async () => {
+    Styles(
+      {
+        constants: {
+          blue: "blue"
+        },
+        local: { color: "$blue" }
+      },
+      "namespace"
+    );
+    expect(GlobalUse(".local", "namespace")()).toMatchObject({
+      color: "blue"
+    });
+  });
+
   it("GlobalUse gets namespaced constant cache properly", async () => {
     Styles(
       {
@@ -243,6 +269,23 @@ describe("utils", () => {
     );
     expect(GlobalUse("@namespace&disable")([false])).toMatchObject({
       color: "blue"
+    });
+  });
+
+  it("GlobalUse with computed values and constants on style object", async () => {
+    Styles(
+      {
+        constants: {
+          grey: "grey"
+        },
+        computed: {
+          disable: ([isDisabled]) => ({ color: isDisabled ? "$grey" : "blue" })
+        }
+      },
+      "namespace"
+    );
+    expect(GlobalUse("&disable", "namespace")([true])).toMatchObject({
+      color: "grey"
     });
   });
 });
