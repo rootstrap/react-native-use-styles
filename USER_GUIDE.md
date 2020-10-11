@@ -145,7 +145,7 @@ const component = () ⇒ {
 }
 ```
 
-If you are not going to use namespaced styles you can use `useGlobalStyles` to get your styles directly. Actually `useStyles` is a wrapper of `useGlobalStyles`, e.g: `useStyles = () => useGlobalStyles(definitionNamespace)`.
+If you are not going to use namespaced styles you can use `useGlobalStyles` to get your styles directly. Actually `useStyles` is a wrapper of `useGlobalStyles`: `useStyles = (dependencies) => useGlobalStyles(namespace, dependencies)`.
 
 ### GlobalUse
 
