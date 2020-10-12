@@ -1,6 +1,6 @@
-import './styles/global';
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import "./styles/global";
+import React, { useState } from "react";
+import { View, Text, Button } from "react-native";
 
 import useStyles from "./styles/namespaced";
 

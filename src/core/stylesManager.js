@@ -37,19 +37,19 @@ export const getFromStorage = (
 
 const constantsMutation = (styles, namespace, definition) => {
   for (let [key, value] of Object.entries(styles)) {
-    if (typeof value === 'string' && isConstant(value)) {
+    if (typeof value === "string" && isConstant(value)) {
       styles[key] = getFromStorage(value, namespace, definition, true);
     }
   }
-}
+};
 
 const recomputeMutation = (cache, dependencies) => {
   for (let [key, { compute }] of Object.entries(cache)) {
     if (hasComputed(key)) {
-      cache[key] = { 
-        compute, 
-        style: compute(dependencies) 
-      }
+      cache[key] = {
+        compute,
+        style: compute(dependencies)
+      };
     }
   }
 };
@@ -57,7 +57,11 @@ const recomputeMutation = (cache, dependencies) => {
 const computePath = (path, namespace, dependencies) => {
   let fn = getFromStorage(path, namespace, null, false, true);
   if (!fn) {
-    console.warn(`Computed ${path} not found in cache`);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `Non-Existent-Computed: Computed ${path} not found in cache.`
+      );
+    }
     return;
   }
 
@@ -112,8 +116,10 @@ export const useGlobalStyles = (nameSpace, dependencies = []) => {
   // manual shallow compare; not using useEffect because it would need to render twice
   // given the necessity of explicitly telling react to queue an update with set[State]
   // after recomputing styles
-  if (lastDependencies.current.some((dep, index) => dep !== dependencies[index])) {
-    recomputeMutation(cache, dependencies)
+  if (
+    lastDependencies.current.some((dep, index) => dep !== dependencies[index])
+  ) {
+    recomputeMutation(cache, dependencies);
     lastDependencies.current = dependencies;
   }
 
@@ -134,7 +140,7 @@ export const useGlobalStyles = (nameSpace, dependencies = []) => {
 export const GlobalStyles = (definition, namespace) => {
   for (let [key, value] of Object.entries(definition)) {
     // transform if it's not a style object, the constants object or the computeds object
-    const styles = value;
+    let styles = value;
     if (typeof styles !== "object") {
       styles = styles
         .trim()
