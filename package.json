@@ -4,6 +4,7 @@
   "description": "React Native useStyles",
   "main": "lib/index.js",
   "module": "src/index.js",
+  "types": "src/index.d.ts",
   "files": [
     "src",
     "lib",
@@ -14,7 +15,8 @@
     "test:watch": "jest --verbose --watch",
     "build": "rollup -c",
     "prepare": "rollup -c",
-    "lint": "eslint *.js **/*.js"
+    "lint": "eslint *.js **/*.js",
+    "check:types": "tsc"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "babel-eslint": "^10.1.0",
+    "@rollup/plugin-replace": "^2.3.3",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.18.2",
@@ -51,7 +54,8 @@
     "prettier": "^1.19.1",
     "react": "^16.8.0",
     "react-native": "^0.59.0",
-    "rollup": "^1.29.0"
+    "rollup": "^1.29.0",
+    "typescript": "^4.0.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",

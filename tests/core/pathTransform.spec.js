@@ -1,6 +1,6 @@
 import transform from "../../src/core/pathTransform";
 import { setInCache, clearCache } from "../../src/core/globalCache";
-import { getFromDefinitionOrCache } from "../../src/core/stylesManager";
+import { getFromStorage } from "../../src/core/stylesManager";
 
 describe("utils", () => {
   it("transforms key:value path", async () => {
@@ -57,9 +57,7 @@ describe("utils", () => {
       }
     });
     expect(
-      transform("color:$purple", key =>
-        getFromDefinitionOrCache(key, null, null, true)
-      )
+      transform("color:$purple", key => getFromStorage(key, null, null, true))
     ).toMatchObject({
       color: "purple"
     });
@@ -77,7 +75,7 @@ describe("utils", () => {
     );
     expect(
       transform("color:@namespace$purple", key =>
-        getFromDefinitionOrCache(key, "namespace", null, true)
+        getFromStorage(key, "namespace", null, true)
       )
     ).toMatchObject({
       color: "purple"

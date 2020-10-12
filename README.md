@@ -32,7 +32,7 @@ const component = () ⇒ {
 }
 ```
 
-Note that we are classy now, and nobody would deny it. Next we'll define our `.global` and `.namespaced` style to use them in our components as we are doing in this example.
+Note that we are classy now, and nobody would deny it. Next we'll define our `.global` and `.namespaced` styles to use them in our components as we are doing in this example.
 
 ### Global styles
 
@@ -81,13 +81,71 @@ GlobalStyles({
   constants: {
     purple: 'purple'
   },
-  reused: 'color:$purple'
+  path: 'color:$purple',
+  object: { color: '$purple' }
 });
 ```
 
 You can define constants in your global or namespaced styles that will be available to reuse with the `$` prefix.
 
 There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
+
+### Computed and Dynamic styles
+
+#### Computed styles:
+```js
+import useStyles from './my-namespaced-styles';
+
+const component = () ⇒ {
+  const isPurple = useState(true);
+  const s = useStyles([isPurple]);
+
+  return (
+    <Text styles={s`fx:1 &purple`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+Computed styles are prefixed with the `&` character. Note that we are passing isPurple as a hook's dependency to track it changes. We can then use this dependency in our computed styles as following.
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  computed: {
+    purple: ([isPurple]) => ({ color: isPurple ? 'purple' : 'black' });
+  }
+});
+```
+If the dependencies change, only styles with a computed in it will be recomputed.
+
+#### Dynamic styles:
+```js
+import useStyles from './my-namespaced-styles';
+
+const component = () ⇒ {
+  const isPurple = useState(true);
+  const s = useStyles();
+
+  return (
+    <Text styles={s`fx:1 ${isPurple && '.purple'}`}>
+      Hello World!
+    </Text>
+  );
+}
+```
+
+And a simple style definition as following:
+
+```js
+import { Styles } from 'react-native-use-styles';
+
+export default Styles({
+  purple: { color: 'purple' }
+});
+```
 
 ### Definition order
 
@@ -135,24 +193,11 @@ This library was created with performance in mind; useStyles has multiple cache 
 We plan to keep working in the library to optimize and add new features (contributions are welcome):
 
 - Add informative errors
-- Improve dynamic styling
 - Add tests with test renderers
 - Add tests to a pre-push hook
 - Benchmark
 - Make library definition order safe (?)
 - Add Components with className (?)
-```js
-import namespace from './my-namespaced-styles';
-const { Text } = namespace;
-
-const component = () ⇒ {
-  return (
-    <Text className=".global-style .local-style">
-      Hello World!
-    </Text>
-  );
-}
-```
 
 If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
 
@@ -160,7 +205,7 @@ If you have an idea that could make this library better we would love to hear it
 
 In order to contribute with some code you will need to test your changes within the demo app. At the moment the mechanism that we are using to test the lib inside the app is to import it locally. That means that:
 
-You need to install the dependencies on the library in production mode (`npm install --only=prod`) so you don't have problems with dual installations of react-native each time you make a change, you need to do a force install of the library inside the demo folder.
+You need to install the dependencies on the library in production mode (`npm install --only=prod`) so you don't have problems with dual installations of react-native each time you make a change, you need to do a force install of the library inside the demo folder. If the problem persists, after you test or build the app you encounter duplicated issues, you may want to delete the modules of one of the packages, the lib or the demo app, to solve this issue.
 
 If you are comfortable using something like [Wix's wml](https://github.com/wix/wml), it could provide a better development experience for you. We wanted the main contributing option to not require any extra installations or knowledge. Symlinks have not worked and that is why we recommend Wml.
 
