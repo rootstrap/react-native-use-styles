@@ -1,6 +1,6 @@
 {
   "name": "react-native-use-styles",
-  "version": "1.2.0",
+  "version": "1.1.0",
   "description": "React Native useStyles",
   "main": "lib/index.js",
   "module": "src/index.js",
@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
+    "babel-eslint": "^10.1.0",
     "@rollup/plugin-replace": "^2.3.3",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.11.0",
