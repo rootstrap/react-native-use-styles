@@ -152,9 +152,11 @@ If you are not going to use namespaced styles you can use `useGlobalStyles` to g
 ```js
 import { GlobalUse } from 'react-native-use-styles';
 
+const s = (styles) => GlobalUse(styles, 'namespace')();
+
 const component = () ⇒ {
   return (
-    <Text styles={GlobalUse('.global .local', 'namespace')}>
+    <Text styles={s('.global .local')}>
       Hello World!
     </Text>
   );
