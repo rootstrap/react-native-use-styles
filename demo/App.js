@@ -2,7 +2,7 @@ import './styles/global';
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 
-import useStyles from './styles/namespaced';
+import useStyles from "./styles/namespaced";
 
 export default function App() {
   const [isDisabled, setDisabled] = useState(false);
