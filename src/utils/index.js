@@ -25,11 +25,6 @@ export const isComputed = path =>
 
 export const hasComputed = path => path.indexOf(COMPTUED_PREFIX) !== -1;
 
-export const StyleSheetNoop = {
-  flatten: styles => styles,
-  create: styles => styles
-};
-
 export const isFalseyString = value => {
   try {
     return value === "undefined" || !JSON.parse(value);

@@ -1,8 +1,12 @@
-import transform from "../../src/core/transformer";
+import transform, { setSeparator } from "../../src/core/transformer";
 import { setInCache, clearCache } from "../../src/core/cache";
-import { getFromStorage } from "../../src/core";
+import { getFromStorage } from "../../src/core/manager";
 
 describe("utils", () => {
+  beforeEach(() => {
+    setSeparator(":");
+  });
+
   it("transforms key:value path", async () => {
     expect(transform("flex:1")).toMatchObject({ flex: 1 });
   });
@@ -80,5 +84,10 @@ describe("utils", () => {
     ).toMatchObject({
       color: "purple"
     });
+  });
+
+  it("sets a separator", async () => {
+    setSeparator("-");
+    expect(transform("flex-1")).toMatchObject({ flex: 1 });
   });
 });

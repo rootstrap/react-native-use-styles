@@ -1,2 +1,3 @@
 export { setSeparator } from "./core/transformer";
-export { Styles, GlobalStyles, GlobalUse, useGlobalStyles } from "./core";
+export { Styles, useGlobalStyles } from "./core";
+export { GlobalStyles, GlobalUse } from "./core/manager";
