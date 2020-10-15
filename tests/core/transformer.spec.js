@@ -1,6 +1,6 @@
-import transform from "../../src/core/pathTransform";
-import { setInCache, clearCache } from "../../src/core/globalCache";
-import { getFromStorage } from "../../src/core/stylesManager";
+import transform from "../../src/core/transformer";
+import { setInCache, clearCache } from "../../src/core/cache";
+import { getFromStorage } from "../../src/core";
 
 describe("utils", () => {
   it("transforms key:value path", async () => {

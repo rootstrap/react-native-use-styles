@@ -9,7 +9,7 @@ import {
   isConstant,
   isComputed,
   hasComputed
-} from "../../src/core/utils";
+} from "../../src/utils";
 
 describe("utils", () => {
   it("isComputed finds the computed", async () => {

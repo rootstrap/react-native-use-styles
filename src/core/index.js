@@ -1,7 +1,7 @@
 // TODO: p(124235, 'fl-row') to send the identifier of a Stylesheet.create style
 import { useRef } from "react";
-import transform from "./pathTransform";
-import { getFromCache, setInCache } from "./globalCache";
+import transform from "./transformer";
+import { getFromCache, setInCache } from "./cache";
 import {
   isFalseyString,
   isConstant,
@@ -14,7 +14,7 @@ import {
   getNamespace,
   flattenStyles,
   getPathFromLiteralTag
-} from "./utils";
+} from "../utils";
 
 export const getFromStorage = (
   pKey,

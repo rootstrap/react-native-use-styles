@@ -3,7 +3,6 @@
 <p align="center">
   <img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" />
   <img src="https://travis-ci.com/rootstrap/react-native-use-styles.svg?branch=main" />
-  <img src="coverage/badge-lines.svg" />
 <p>
 
 #### A classy approach.

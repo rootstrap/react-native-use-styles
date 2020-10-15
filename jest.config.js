@@ -12,5 +12,9 @@ module.exports = {
   coverageReporters: [
     "json-summary"
   ],
-  collectCoverage: true
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/core/**.js",
+    "src/utils/**.js",
+  ]
 };

@@ -1,8 +1,4 @@
-import {
-  setInCache,
-  getFromCache,
-  clearCache
-} from "../../src/core/globalCache";
+import { setInCache, getFromCache, clearCache } from "../../src/core/cache";
 
 describe("utils", () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import { clearCache, getFromCache } from "../../src/core/globalCache";
-import { GlobalStyles, Styles, GlobalUse } from "../../src/core/stylesManager";
+import { clearCache, getFromCache } from "../../src/core/cache";
+import { GlobalStyles, Styles, GlobalUse } from "../../src/core";
 
 describe("utils", () => {
   beforeEach(() => {

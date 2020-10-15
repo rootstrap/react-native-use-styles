@@ -13,8 +13,8 @@
   "scripts": {
     "test": "jest --verbose",
     "test:watch": "jest --verbose --watch",
-    "test:coverage": "jest --collect-coverag",
-    "test:coverage:badge": "jest-coverage-badges",
+    "test:coverage": "jest --collect-coverage",
+    "test:coverage:badge": "make-coverage-badge",
     "build": "rollup -c",
     "prepare": "rollup -c",
     "lint": "eslint *.js **/*.js",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.3.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.6.0",
@@ -53,7 +54,7 @@
     "eslint-plugin-react-native": "^3.10.0",
     "husky": "^4.3.0",
     "jest": "^24.9.0",
-    "jest-coverage-badges": "^1.1.2",
+    "make-coverage-badge": "^1.2.0",
     "prettier": "^1.19.1",
     "react": "^16.8.0",
     "react-native": "^0.59.0",
@@ -66,7 +67,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm test && test:coverage:badge"
+      "pre-push": "npm test && npm run lint"
     }
   }
 }

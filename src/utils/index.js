@@ -1,10 +1,10 @@
-const CLASS_PREFIX = ".";
-const NAMESPACE_PREFIX = "@";
-const CONSTANTS_PREFIX = "$";
-const COMPTUED_PREFIX = "&";
-const NAMESPACE_REGEX = new RegExp(
-  `@[^${CLASS_PREFIX}${CONSTANTS_PREFIX}${COMPTUED_PREFIX}]+`
-);
+import {
+  CLASS_PREFIX,
+  NAMESPACE_PREFIX,
+  CONSTANTS_PREFIX,
+  COMPTUED_PREFIX,
+  NAMESPACE_REGEX
+} from "../constants";
 
 export const isNamespace = path => path.startsWith(NAMESPACE_PREFIX);
 

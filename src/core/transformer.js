@@ -1,8 +1,9 @@
-import stylesDictionary from "./stylesDictionary";
-import aliasesDictionary from "./aliasesDictionary";
-import { isConstant } from "./utils";
+import stylesDictionary from "../dictionaries/styles";
+import aliasesDictionary from "../dictionaries/aliases";
+import { isConstant } from "../utils";
+import { DEFAULT_SEPARATOR } from "../constants";
 
-export let separator = ":";
+let separator = DEFAULT_SEPARATOR;
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
