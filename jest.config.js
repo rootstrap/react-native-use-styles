@@ -9,4 +9,8 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|react-(native|universal|navigation)-(.*)|@react-native-community/(.*)|@react-navigation/(.*)|bs-platform|@rootstrap/redux-tools)',
   ],
+  coverageReporters: [
+    "json-summary"
+  ],
+  collectCoverage: true
 };
