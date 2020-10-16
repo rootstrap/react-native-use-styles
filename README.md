@@ -38,23 +38,24 @@ Note that we are classy now, and nobody would deny it. Next we'll define our `.g
 ### Global styles
 
 `global-styles.js`
+
 ```js
-import { GlobalStyles } from 'react-native-use-styles';
+import { GlobalStyles } from "react-native-use-styles";
 
 GlobalStyles({
-  global: 'flex:1 fx:dir:row'
+  global: "flex:1 fx:dir:row",
 });
 ```
 
 We are using aliases or shortcuts to define our styles. This is equivalent to do:
 
 ```js
-import { GlobalStyles } from 'react-native-use-styles';
+import { GlobalStyles } from "react-native-use-styles";
 
 GlobalStyles({
   global: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: "row",
   },
 });
 ```
@@ -62,28 +63,29 @@ GlobalStyles({
 ### Namespaced styles
 
 `my-namespaced-styles.js`
+
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  reused: 'bg:color:green',
-  namespaced: '.global .reused color:purple'
+  reused: "bg:color:green",
+  namespaced: ".global .reused color:purple",
 });
 ```
 
-Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles. Note that we are exporting the result of our namespaced definition. 
+Namespaced styles are a way to isolate a group of styles for a particular part of your app, it could be styles for a component, a screen, etc. This is a way to group semantically and avoid collisions between your styles. Note that we are exporting the result of our namespaced definition.
 
 ### Constants
 
 ```js
-import { GlobalStyles } from 'react-native-use-styles';
+import { GlobalStyles } from "react-native-use-styles";
 
 GlobalStyles({
   constants: {
-    purple: 'purple'
+    purple: "purple",
   },
-  path: 'color:$purple',
-  object: { color: '$purple' }
+  path: "color:$purple",
+  object: { color: "$purple" },
 });
 ```
 
@@ -94,6 +96,7 @@ There are plenty more things you can do with useStyles, learn more in [User Guid
 ### Computed and Dynamic styles
 
 #### Computed styles:
+
 ```js
 import useStyles from './my-namespaced-styles';
 
@@ -120,9 +123,11 @@ export default Styles({
   }
 });
 ```
+
 If the dependencies change, only styles with a computed in it will be recomputed.
 
 #### Dynamic styles:
+
 ```js
 import useStyles from './my-namespaced-styles';
 
@@ -141,10 +146,10 @@ const component = () ⇒ {
 And a simple style definition as following:
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: { color: 'purple' }
+  purple: { color: "purple" },
 });
 ```
 
@@ -153,16 +158,15 @@ export default Styles({
 You want your global styles to be defined or imported before all the other styles. So just import your global styles at the top of your `App.js` or your main entry point; before the imports of your custom or navigation component.
 
 App.js
-```js
-import './globalStyles'; // ultra safe zone
-import React from 'react';
 
-import CustomComponent from './CustomComponent';
+```js
+import "./globalStyles"; // ultra safe zone
+import React from "react";
+
+import CustomComponent from "./CustomComponent";
 
 export default function App() {
-  return (
-    <CustomComponent />
-  );
+  return <CustomComponent />;
 }
 ```
 
@@ -171,18 +175,18 @@ export default function App() {
 This is the current list of aliases available, we plan to add more.
 
 ```js
-bot  =  bottom
-col  =  column
-dir  =  direction
-fx   =  flex
-lt   =  left
-rt   =  right
-bg   =  background
-txt  =  text
-jf   =  justify
-pd   =  padding
-wd   =  width
-hg   =  height
+bot = bottom;
+col = column;
+dir = direction;
+fx = flex;
+lt = left;
+rt = right;
+bg = background;
+txt = text;
+jf = justify;
+pd = padding;
+wd = width;
+hg = height;
 ```
 
 ### Performance

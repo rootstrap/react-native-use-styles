@@ -10,9 +10,8 @@ module.exports = {
     'node_modules/(?!(jest-)?react-native|react-(native|universal|navigation)-(.*)|@react-native-community/(.*)|@react-navigation/(.*)|bs-platform|@rootstrap/redux-tools)',
   ],
   coverageReporters: [
-    "json-summary"
+    "lcov"
   ],
-  collectCoverage: true,
   collectCoverageFrom: [
     "src/core/**.js",
     "src/utils/**.js"

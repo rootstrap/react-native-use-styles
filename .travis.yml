@@ -1,9 +1,0 @@
-cache: yarn
-language: node_js
-node_js:
-  - "lts/*"
-  - "node"
-script:
-  - npm run build
-  - npm run test
-  - npm run lint
