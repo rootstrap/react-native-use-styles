@@ -61,7 +61,7 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
   return rawStyles
     .trim()
     .split(" ")
-    .reduce((stylesAcc, rawStyle) => {
+    .reduce((styles, rawStyle) => {
       let style;
 
       if (hasClassName(rawStyle)) {
@@ -73,11 +73,11 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
           getFromStorage(key, namespace, definition, true)
         );
       } else {
-        return stylesAcc;
+        return styles;
       }
 
-      return { ...stylesAcc, ...style };
-    }, {});
+      return Object.assign(styles, style);
+    }, Object.create(null));
 };
 
 export const GlobalUse = (rawStyles, namespace) => {
