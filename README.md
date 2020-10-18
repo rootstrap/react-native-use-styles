@@ -195,16 +195,7 @@ This library was created with performance in mind; useStyles has multiple cache 
 
 ## Contributing
 
-We plan to keep working in the library to optimize and add new features (contributions are welcome):
-
-- Add informative errors
-- Add tests with test renderers
-- Add tests to a pre-push hook
-- Benchmark
-- Make library definition order safe (?)
-- Add Components with className (?)
-
-If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
+We plan to keep working in the library to optimize and add new features (contributions are welcome). If you have an idea that could make this library better we would love to hear it. Please take a look at our [Contributing Guidelines](CONTRIBUTING.md) to get to know the rules and how to get started with your contribution.
 
 ### How to run the demo app
 
