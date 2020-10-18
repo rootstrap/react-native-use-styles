@@ -91,8 +91,6 @@ GlobalStyles({
 
 You can define constants in your global or namespaced styles that will be available to reuse with the `$` prefix.
 
-There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
-
 ### Computed and Dynamic styles
 
 #### Computed styles:
@@ -152,6 +150,8 @@ export default Styles({
   purple: { color: "purple" },
 });
 ```
+
+There are plenty more things you can do with useStyles, learn more in [User Guide](USER_GUIDE.md)
 
 ### Definition order
 

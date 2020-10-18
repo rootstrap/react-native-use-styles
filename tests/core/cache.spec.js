@@ -6,17 +6,17 @@ describe("utils", () => {
     console.warn = jest.fn();
   });
 
-  it("setInCache sets in global cache properly", async () => {
+  it("setInCache sets in global cache properly", () => {
     setInCache({ style: true });
     expect(getFromCache("style")).toBe(true);
   });
 
-  it("setInCache sets in namespaced cache properly", async () => {
+  it("setInCache sets in namespaced cache properly", () => {
     setInCache({ style: true }, "namespace");
     expect(getFromCache("style", "namespace")).toBe(true);
   });
 
-  it("getFromCache gets in global cache when namespaced", async () => {
+  it("getFromCache gets in global cache when namespaced", () => {
     setInCache({ style: true });
     expect(getFromCache("style", "namespace")).toBe(true);
     expect(console.warn).toBeCalledTimes(1);
@@ -25,7 +25,7 @@ describe("utils", () => {
     );
   });
 
-  it("getFromCache doesn't get from cache", async () => {
+  it("getFromCache doesn't get from cache", () => {
     expect(getFromCache("style", "namespace")).toBe(undefined);
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(

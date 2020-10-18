@@ -7,53 +7,53 @@ describe("utils", () => {
     setSeparator(":");
   });
 
-  it("transforms key:value path", async () => {
+  it("transforms key:value path", () => {
     expect(transform("flex:1")).toMatchObject({ flex: 1 });
   });
 
-  it("transforms key:key:value path", async () => {
+  it("transforms key:key:value path", () => {
     expect(transform("flex:direction:row")).toMatchObject({
       flexDirection: "row"
     });
   });
 
-  it("transforms key:key:key:value path", async () => {
+  it("transforms key:key:key:value path", () => {
     expect(transform("border:bottom:color:grey")).toMatchObject({
       borderBottomColor: "grey"
     });
   });
 
-  it("transforms key:value:value path", async () => {
+  it("transforms key:value:value path", () => {
     expect(transform("flex:1:2")).toMatchObject({
       flex: "1 2"
     });
   });
 
-  it("transforms key:key:value:value path", async () => {
+  it("transforms key:key:value:value path", () => {
     expect(transform("background:color:green:red")).toMatchObject({
       backgroundColor: "green red"
     });
   });
 
-  it("transforms aliases for keys", async () => {
+  it("transforms aliases for keys", () => {
     expect(transform("fx:1")).toMatchObject({
       flex: 1
     });
   });
 
-  it("transforms aliases for value", async () => {
+  it("transforms aliases for value", () => {
     expect(transform("flex:direction:col")).toMatchObject({
       flexDirection: "column"
     });
   });
 
-  it("transforms aliases for key:value", async () => {
+  it("transforms aliases for key:value", () => {
     expect(transform("fx:dir:col")).toMatchObject({
       flexDirection: "column"
     });
   });
 
-  it("transforms constants for key:$constant", async () => {
+  it("transforms constants for key:$constant", () => {
     clearCache();
     setInCache({
       constants: {
@@ -67,7 +67,7 @@ describe("utils", () => {
     });
   });
 
-  it("transforms constants for key:@namespace$constant", async () => {
+  it("transforms constants for key:@namespace$constant", () => {
     clearCache();
     setInCache(
       {
@@ -86,7 +86,7 @@ describe("utils", () => {
     });
   });
 
-  it("sets a separator", async () => {
+  it("sets a separator", () => {
     setSeparator("-");
     expect(transform("flex-1")).toMatchObject({ flex: 1 });
   });

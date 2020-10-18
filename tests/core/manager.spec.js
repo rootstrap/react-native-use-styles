@@ -7,14 +7,14 @@ describe("utils", () => {
     console.warn = jest.fn();
   });
 
-  it("GlobalStyles sets in global cache properly", async () => {
+  it("GlobalStyles sets in global cache properly", () => {
     GlobalStyles({
       global: { flex: 1 }
     });
     expect(getFromCache("global")).toMatchObject({ flex: 1 });
   });
 
-  it("GlobalStyles sets in namespaced cache properly", async () => {
+  it("GlobalStyles sets in namespaced cache properly", () => {
     GlobalStyles(
       {
         local: { flex: 1 }
@@ -24,7 +24,7 @@ describe("utils", () => {
     expect(getFromCache("local", "namespace")).toMatchObject({ flex: 1 });
   });
 
-  it("Development mode only: GlobalUse produces a console.warn when providing a non-existent namespace", async () => {
+  it("Development mode only: GlobalUse produces a console.warn when providing a non-existent namespace", () => {
     GlobalUse("color:@not-a-namespace$blue")();
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
@@ -32,7 +32,7 @@ describe("utils", () => {
     );
   });
 
-  it("GlobalStyles sets constants cache properly", async () => {
+  it("GlobalStyles sets constants cache properly", () => {
     GlobalStyles({
       constants: {
         red: "red"
@@ -41,14 +41,21 @@ describe("utils", () => {
     expect(getFromCache("red", null, null, true)).toBe("red");
   });
 
-  it("GlobalUse gets global cache properly", async () => {
+  it("GlobalStyles with falsey value", () => {
+    GlobalStyles({
+      style: "false"
+    });
+    expect(getFromCache("style")).toMatchObject({});
+  });
+
+  it("GlobalUse gets global cache properly", () => {
     GlobalStyles({
       global: { flex: 1 }
     });
     expect(GlobalUse(".global")()).toMatchObject({ flex: 1 });
   });
 
-  it("GlobalUse gets constant from global style properly", async () => {
+  it("GlobalUse gets constant from global style properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -59,7 +66,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse gets global constant from namespaced style properly", async () => {
+  it("GlobalUse gets global constant from namespaced style properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -70,7 +77,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse gets global constant from style object properly", async () => {
+  it("GlobalUse gets global constant from style object properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -81,7 +88,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse with computed values", async () => {
+  it("GlobalUse with computed values", () => {
     GlobalStyles({
       computed: {
         disable: ([isDisabled]) => ({ color: isDisabled ? "grey" : "blue" })
@@ -92,7 +99,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse with computed values and constants on style object", async () => {
+  it("GlobalUse with computed values and constants on style object", () => {
     GlobalStyles({
       constants: {
         grey: "grey"
@@ -106,7 +113,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse with computed don't find value", async () => {
+  it("GlobalUse with computed don't find value", () => {
     GlobalStyles({
       computed: {
         notDisable: ([isDisabled]) => ({
@@ -117,7 +124,7 @@ describe("utils", () => {
     expect(GlobalUse("&disable")([true])).toMatchObject({});
   });
 
-  it("GlobalUse gets constant from style object properly", async () => {
+  it("GlobalUse gets constant from style object properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -129,7 +136,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse gets constant cache properly", async () => {
+  it("GlobalUse gets constant cache properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -140,7 +147,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse gets constant from definition properly", async () => {
+  it("GlobalUse gets constant from definition properly", () => {
     GlobalStyles({
       constants: {
         blue: "blue"
@@ -152,7 +159,7 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse gets style from definition properly", async () => {
+  it("GlobalUse gets style from definition properly", () => {
     GlobalStyles({
       local: "color:blue",
       reused: ".local"
@@ -162,29 +169,29 @@ describe("utils", () => {
     });
   });
 
-  it("GlobalUse generates path styles properly", async () => {
+  it("GlobalUse generates path styles properly", () => {
     expect(GlobalUse("max:height:300")()).toMatchObject({ maxHeight: 300 });
   });
 
-  it("GlobalUse with falsey value false", async () => {
+  it("GlobalUse with falsey value false", () => {
     expect(GlobalUse("color:red false")()).toMatchObject({
       color: "red"
     });
   });
 
-  it("GlobalUse with falsey value undefined", async () => {
+  it("GlobalUse with falsey value undefined", () => {
     expect(GlobalUse("color:red undefined")()).toMatchObject({
       color: "red"
     });
   });
 
-  it("GlobalUse with only falsey value undefined", async () => {
+  it("GlobalUse with only falsey value undefined", () => {
     expect(GlobalUse("color:red null")()).toMatchObject({
       color: "red"
     });
   });
 
-  it("GlobalUse with only falsey value", async () => {
+  it("GlobalUse with only falsey value", () => {
     expect(GlobalUse("undefined")()).toMatchObject({});
   });
 });

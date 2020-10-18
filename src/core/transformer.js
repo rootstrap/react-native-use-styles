@@ -1,9 +1,9 @@
 import stylesDictionary from "../dictionaries/styles";
 import aliasesDictionary from "../dictionaries/aliases";
-import { isConstant } from "../utils";
+import { hasConstant } from "../utils";
 import { DEFAULT_SEPARATOR } from "../constants";
 
-let separator = DEFAULT_SEPARATOR;
+export let separator = DEFAULT_SEPARATOR;
 
 const getKeyFromParts = (node, parts, pos) => {
   let currentPart = parts[pos];
@@ -19,7 +19,7 @@ const getValueFromParts = (parts, pos, getConstant) => {
   while (newPos < parts.length) {
     let newValue = parts[newPos];
 
-    if (isConstant(newValue)) {
+    if (hasConstant(newValue)) {
       newValue = getConstant(newValue);
     } else {
       newValue = aliasesDictionary[newValue] || newValue;
@@ -37,14 +37,7 @@ const getValueFromParts = (parts, pos, getConstant) => {
 };
 
 // PRECONDITION: at least one key-value pair exists in the path
-/* TODO: Use case:
-  input: "fx:1:2:dir:row"
-  output:
-  {
-    flex: 1 2,
-    flexDirection: row
-  }
-*/
+// TODO: should we take the last part as the value (?)
 export default (path, getConstant) => {
   let style = Object.create(null);
   const parts = path.split(separator);
@@ -72,6 +65,6 @@ export default (path, getConstant) => {
   return style;
 };
 
-export const setSeparator = sp => {
-  separator = sp;
+export const setSeparator = newSeparator => {
+  separator = newSeparator;
 };

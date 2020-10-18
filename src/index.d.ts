@@ -6,10 +6,10 @@ type Computed = (
   dependencies: Array<any>
 ) => StyleObject;
 
-export function setSeparator(sp: string): void;
+export function setSeparator(newSeparator: string): void;
 
 export function GlobalUse(
-  path: string, 
+  rawStyle: string, 
   namespace: string
 ): Computed;
 

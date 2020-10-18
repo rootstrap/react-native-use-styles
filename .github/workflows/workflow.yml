@@ -1,26 +1,20 @@
-on: ["push","pull_request"]
+on: ["push", "pull_request"]
 
-name: build, test, lint and coverage
+name: workflow
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
+      - uses: actions/checkout@v2
 
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run test
-    - run: npm run lint
-    - run: npm run test:coverage
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm install
+      - run: npm run build
+      - run: npm run test
+      - run: npm run lint

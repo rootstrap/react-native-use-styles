@@ -1,5 +1,5 @@
 module.exports = {
-  preset: 'react-native',
+  preset: 'react-native', 
   setupFiles: [
     './tests/__mocks__/index.js'
   ],
@@ -12,6 +12,7 @@ module.exports = {
   coverageReporters: [
     "lcov"
   ],
+  collectCoverage: false,
   collectCoverageFrom: [
     "src/core/**.js",
     "src/utils/**.js"

@@ -2,15 +2,14 @@
 import transform from "./transformer";
 import { getFromCache, setInCache } from "./cache";
 import {
-  isFalseyString,
-  isConstant,
-  isClassName,
-  isComputed,
+  hasConstant,
+  hasClassName,
+  hasComputed,
   getKey,
   isNamespace,
   getKeyFromNamespace,
   getNamespace,
-  flattenStyles
+  hasPath
 } from "../utils";
 
 export const getFromStorage = (
@@ -34,7 +33,7 @@ export const getFromStorage = (
 
 const constantsMutation = (styles, namespace, definition) => {
   for (let [key, value] of Object.entries(styles)) {
-    if (typeof value === "string" && isConstant(value)) {
+    if (typeof value === "string" && hasConstant(value)) {
       styles[key] = getFromStorage(value, namespace, definition, true);
     }
   }
@@ -56,35 +55,39 @@ const computePath = (path, namespace, dependencies) => {
   return fn(dependencies);
 };
 
-export const GlobalUse = (path, namespace) => {
+const processStyles = (rawStyles, namespace, dependencies, definition) => {
+  // if there's a definition, it's because we come from a style definition
+  // meaning GlobalStyles is being used
+  return rawStyles
+    .trim()
+    .split(" ")
+    .reduce((stylesAcc, rawStyle) => {
+      let style;
+
+      if (hasClassName(rawStyle)) {
+        style = getFromStorage(rawStyle, namespace, definition);
+      } else if (!definition && hasComputed(rawStyle)) {
+        style = computePath(rawStyle, namespace, dependencies);
+      } else if (hasPath(rawStyle)) {
+        style = transform(rawStyle, key =>
+          getFromStorage(key, namespace, definition, true)
+        );
+      } else {
+        return stylesAcc;
+      }
+
+      return { ...stylesAcc, ...style };
+    }, {});
+};
+
+export const GlobalUse = (rawStyles, namespace) => {
   // TODO: this is retrieving all the styles even if we are recomputing
   // maybe, if we are recomputing, we should find a way to retreive only the computeds
   return dependencies => {
-    let styles = path;
+    let styles = rawStyles;
 
     if (typeof styles !== "object") {
-      styles = path
-        .trim()
-        .split(" ")
-        .reduce((stylesAcc, p) => {
-          let style;
-
-          if (isFalseyString(p)) {
-            return stylesAcc;
-          }
-
-          if (isClassName(p)) {
-            style = getFromStorage(p, namespace);
-          } else if (isComputed(p)) {
-            style = computePath(p, namespace, dependencies);
-          } else {
-            style = transform(p, key =>
-              getFromStorage(key, namespace, null, true)
-            );
-          }
-
-          return { ...stylesAcc, ...style };
-        }, {});
+      styles = processStyles(styles, namespace, dependencies);
     } else {
       constantsMutation(styles, namespace);
     }
@@ -94,33 +97,11 @@ export const GlobalUse = (path, namespace) => {
 };
 
 export const GlobalStyles = (definition, namespace) => {
-  for (let [key, value] of Object.entries(definition)) {
-    // transform if it's not a style object, the constants object or the computeds object
-    let styles = value;
+  for (let [key, rawStyles] of Object.entries(definition)) {
+    let styles = rawStyles;
+
     if (typeof styles !== "object") {
-      styles = styles
-        .trim()
-        .split(" ")
-        .reduce((stylesAcc, path) => {
-          let style;
-
-          if (isFalseyString(path)) {
-            return stylesAcc;
-          }
-
-          if (isClassName(path)) {
-            style = getFromStorage(path, namespace, definition);
-          } else {
-            style = transform(path, key =>
-              getFromStorage(key, namespace, definition, true)
-            );
-          }
-
-          stylesAcc.push(style);
-          return stylesAcc;
-        }, []);
-
-      definition[key] = flattenStyles(styles);
+      definition[key] = processStyles(styles, namespace, null, definition);
     } else {
       constantsMutation(styles, namespace, definition);
     }

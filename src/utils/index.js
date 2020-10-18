@@ -5,39 +5,24 @@ import {
   COMPTUED_PREFIX,
   NAMESPACE_REGEX
 } from "../constants";
+import { separator } from "../core/transformer";
 
-export const isNamespace = path => path.startsWith(NAMESPACE_PREFIX);
+export const isNamespace = style => style.startsWith(NAMESPACE_PREFIX);
 
-export const getKeyFromNamespace = path => path.replace(NAMESPACE_REGEX, "");
+export const getKeyFromNamespace = style => style.replace(NAMESPACE_REGEX, "");
 
-export const getKey = path => path.substring(1);
+export const getKey = style => style.substring(1);
 
-export const getNamespace = path => path.match(NAMESPACE_REGEX)[0].substring(1);
+export const getNamespace = style =>
+  style.match(NAMESPACE_REGEX)[0].substring(1);
 
-export const isClassName = path =>
-  getKeyFromNamespace(path).startsWith(CLASS_PREFIX);
+export const hasPath = style => style.indexOf(separator) !== -1;
 
-export const isConstant = path =>
-  getKeyFromNamespace(path).startsWith(CONSTANTS_PREFIX);
+export const hasClassName = style => style.indexOf(CLASS_PREFIX) !== -1;
 
-export const isComputed = path =>
-  getKeyFromNamespace(path).startsWith(COMPTUED_PREFIX);
+export const hasConstant = style => style.indexOf(CONSTANTS_PREFIX) !== -1;
 
-export const hasComputed = path => path.indexOf(COMPTUED_PREFIX) !== -1;
-
-export const isFalseyString = value => {
-  try {
-    return value === "undefined" || !JSON.parse(value);
-  } catch (_) {
-    return false;
-  }
-};
-
-export const flattenStyles = styles =>
-  styles.reduce(
-    (flattenStyles, style) => Object.assign(flattenStyles, style),
-    Object.create(null)
-  );
+export const hasComputed = style => style.indexOf(COMPTUED_PREFIX) !== -1;
 
 export const getPathFromLiteralTag = (strings, expressions) =>
   strings.reduce(
