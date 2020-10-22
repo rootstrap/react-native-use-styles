@@ -11,6 +11,7 @@ import {
   getNamespace,
   hasPath
 } from "../utils";
+import { CONSTANTS_KEY, COMPUTED_KEY } from "../constants";
 
 export const getFromStorage = (
   pKey,
@@ -44,7 +45,7 @@ const computePath = (path, namespace, dependencies) => {
   if (!fn) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(
-        `Non-Existent-Computed: Computed ${path} not found in cache.`
+        `Non-Existent-Computed: Computed ${path} not found in cache. You are seeing this warning because you are in development mode. In a production build there will be no warning.`
       );
     }
     return;
@@ -86,9 +87,9 @@ export const GlobalUse = (rawStyles, namespace) => {
   return dependencies => {
     let styles = rawStyles;
 
-    if (typeof styles !== "object") {
+    if (typeof styles === "string") {
       styles = processStyles(styles, namespace, dependencies);
-    } else {
+    } else if (typeof styles === "object") {
       constantsMutation(styles, namespace);
     }
 
@@ -100,9 +101,19 @@ export const GlobalStyles = (definition, namespace) => {
   for (let [key, rawStyles] of Object.entries(definition)) {
     let styles = rawStyles;
 
-    if (typeof styles !== "object") {
+    if (process.env.NODE_ENV !== "production" && typeof styles === "function") {
+      console.warn(
+        `Invalid-Style-Type: The following style is invalid: "${key}", computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
+      );
+    }
+
+    if (typeof styles === "string") {
       definition[key] = processStyles(styles, namespace, null, definition);
-    } else {
+    } else if (
+      typeof styles === "object" &&
+      key !== CONSTANTS_KEY &&
+      key !== COMPUTED_KEY
+    ) {
       constantsMutation(styles, namespace, definition);
     }
   }

@@ -24,14 +24,6 @@ describe("utils", () => {
     expect(getFromCache("local", "namespace")).toMatchObject({ flex: 1 });
   });
 
-  it("Development mode only: GlobalUse produces a console.warn when providing a non-existent namespace", () => {
-    GlobalUse("color:@not-a-namespace$blue")();
-    expect(console.warn).toBeCalledTimes(1);
-    expect(console.warn).toHaveBeenLastCalledWith(
-      'Non-Existent-Namespace: The following namespace does not exist or has not been imported: "not-a-namespace". You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.'
-    );
-  });
-
   it("GlobalStyles sets constants cache properly", () => {
     GlobalStyles({
       constants: {
@@ -193,5 +185,26 @@ describe("utils", () => {
 
   it("GlobalUse with only falsey value", () => {
     expect(GlobalUse("undefined")()).toMatchObject({});
+  });
+
+  it("Development mode only: GlobalUse produces a console.warn when providing a non-existent namespace", () => {
+    GlobalUse("color:@not-a-namespace$blue")();
+    expect(console.warn).toBeCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      'Non-Existent-Namespace: The following namespace does not exist or has not been imported: "not-a-namespace". You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.'
+    );
+  });
+
+  it("Development mode only: GlobalStyles produces a console.warn when providing an Invalid-Style-Type", () => {
+    GlobalStyles({
+      computed: {
+        insideComputed: ([isColored]) => ({ color: isColored ? "red" : "blue" })
+      },
+      outsideComputed: ([isColored]) => ({ color: isColored ? "red" : "blue" })
+    });
+    expect(console.warn).toBeCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      'Invalid-Style-Type: The following style is invalid: "outsideComputed", computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.'
+    );
   });
 });
