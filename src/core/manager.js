@@ -1,5 +1,4 @@
-// TODO: p(124235, 'fl-row') to send the identifier of a Stylesheet.create style
-import transform from "./transformer";
+import transform, { hasPath } from "./transformer";
 import { getFromCache, setInCache } from "./cache";
 import {
   hasConstant,
@@ -8,8 +7,7 @@ import {
   getKey,
   isNamespace,
   getKeyFromNamespace,
-  getNamespace,
-  hasPath
+  getNamespace
 } from "../utils";
 import { CONSTANTS_KEY, COMPUTED_KEY } from "../constants";
 
@@ -45,7 +43,7 @@ const computePath = (path, namespace, dependencies) => {
   if (!fn) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(
-        `Non-Existent-Computed: Computed ${path} not found in cache. You are seeing this warning because you are in development mode. In a production build there will be no warning.`
+        `useStyles Non-Existent-Computed: Computed style "${path}" not found in cache. You are seeing this warning because you are in development mode. In a production build there will be no warning.`
       );
     }
     return;
@@ -97,13 +95,14 @@ export const GlobalUse = (rawStyles, namespace) => {
   };
 };
 
+// TODO: GlobalStyles({ [style]: 124235 }); receives a Stylesheet identifier (?)
 export const GlobalStyles = (definition, namespace) => {
   for (let [key, rawStyles] of Object.entries(definition)) {
     let styles = rawStyles;
 
     if (process.env.NODE_ENV !== "production" && typeof styles === "function") {
       console.warn(
-        `Invalid-Style-Type: The following style is invalid: "${key}", computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
+        `useStyles Invalid-Style-Type: Style "${key}" is not valid. Computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
       );
     }
 

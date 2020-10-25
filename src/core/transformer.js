@@ -5,64 +5,52 @@ import { DEFAULT_SEPARATOR } from "../constants";
 
 export let separator = DEFAULT_SEPARATOR;
 
-const getKeyFromParts = (node, parts, pos) => {
-  let currentPart = parts[pos];
-  currentPart = aliasesDictionary[currentPart] || currentPart;
+export const hasPath = style => style.indexOf(separator) !== -1;
 
-  return node[currentPart];
+const getValueFromParts = (parts, getConstant) => {
+  // value is always located in the last part
+  let value = parts[parts.length - 1];
+
+  if (hasConstant(value)) {
+    value = getConstant(value);
+  } else {
+    value = aliasesDictionary[value] || value;
+  }
+
+  return parseFloat(value) || value;
 };
 
-const getValueFromParts = (parts, pos, getConstant) => {
-  let newPos = pos;
-  let value = "";
+const getKeyFromParts = parts => {
+  let current = stylesDictionary;
 
-  while (newPos < parts.length) {
-    let newValue = parts[newPos];
+  for (let x = 0; x < parts.length - 1; x += 1) {
+    let part = parts[x];
+    part = aliasesDictionary[part] || part;
+    current = current[part];
 
-    if (hasConstant(newValue)) {
-      newValue = getConstant(newValue);
-    } else {
-      newValue = aliasesDictionary[newValue] || newValue;
+    if (current === undefined) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          `useStyles Invalid-Style-Key: "${part}" is not a valid key for styles. You are seeing this warning because you are in development mode. In a production build there will be no warning.`
+        );
+      }
+
+      return;
     }
-
-    value += ` ${newValue}`;
-    newPos += 1;
-  }
-  value = value.substring(1);
-  if (value.indexOf(" ") === -1) {
-    value = parseFloat(value) || value;
   }
 
-  return [value, newPos];
+  return current.__propName;
 };
 
 // PRECONDITION: at least one key-value pair exists in the path
-// TODO: should we take the last part as the value (?)
 export default (path, getConstant) => {
-  let style = Object.create(null);
   const parts = path.split(separator);
+  const key = getKeyFromParts(parts);
+  const value = getValueFromParts(parts, getConstant);
 
-  // iterates until find a value, then get values until end
-  let currentNode = getKeyFromParts(stylesDictionary, parts, 0);
-  let pos = 1;
-  while (pos < parts.length) {
-    const lastNode = currentNode;
-    currentNode = getKeyFromParts(currentNode, parts, pos);
-
-    // if it's an object we need to keep digging, otherwise is undefined cause we found a value
-    if (!currentNode) {
-      const [value, newPos] = getValueFromParts(parts, pos, getConstant);
-      pos = newPos;
-
-      Object.assign(style, {
-        [lastNode.__propName]: value
-      });
-    }
-
-    pos += 1;
-  }
-
-  return style;
+  return Object.assign(Object.create(null), {
+    [key]: value
+  });
 };
 
 export const setSeparator = newSeparator => {

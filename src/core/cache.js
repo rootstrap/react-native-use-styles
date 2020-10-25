@@ -13,6 +13,18 @@ const processDefinition = definition => {
   const constants = definition.constants;
   const computed = definition.computed;
 
+  if (process.env.NODE_ENV !== "production" && definition.constant) {
+    console.warn(
+      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode.'
+    );
+  }
+
+  if (process.env.NODE_ENV !== "production" && definition.computeds) {
+    console.warn(
+      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode.'
+    );
+  }
+
   definition.constants = null;
   definition.computed = null;
 
@@ -80,7 +92,7 @@ export const getFromCache = (
     !globalCache[namespace]
   ) {
     console.warn(
-      `Non-Existent-Namespace: The following namespace does not exist or has not been imported: "${namespace}". You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
+      `useStyles Non-Existent-Namespace: Namespace "${namespace}" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
     );
   }
 
@@ -92,6 +104,21 @@ export const getFromCache = (
       isConstant,
       isComputed
     );
+  }
+
+  // key not found
+  if (!value) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `useStyles Non-Existent-${
+          isConstant ? "Constant: Constant" : "Style: Style"
+        } "${key}" does not exist. You are seeing this warning because you are in development mode. In a production build there will be no warning and these ${
+          isConstant ? "constants" : "styles"
+        } will be ignored.`
+      );
+    }
+
+    return;
   }
 
   // if it's a style, get native style from cached id with flatten

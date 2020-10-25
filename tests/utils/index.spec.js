@@ -5,8 +5,7 @@ import {
   getPathFromLiteralTag,
   hasConstant,
   hasComputed,
-  hasClassName,
-  hasPath
+  hasClassName
 } from "../../src/utils";
 
 describe("utils", () => {
@@ -71,13 +70,5 @@ describe("utils", () => {
 
   it("hasConstant finds a namespaced constant", () => {
     expect(hasConstant("@namespace$constant")).toBe(true);
-  });
-
-  it("hasPath finds a path", () => {
-    expect(hasPath("flex:dir:1")).toBe(true);
-  });
-
-  it("hasPath doesn't find a path", () => {
-    expect(hasPath(".class")).toBe(false);
   });
 });
