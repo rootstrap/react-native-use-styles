@@ -15,13 +15,13 @@ const processDefinition = definition => {
 
   if (process.env.NODE_ENV !== "production" && definition.constant) {
     console.warn(
-      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode.'
+      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
     );
   }
 
   if (process.env.NODE_ENV !== "production" && definition.computeds) {
     console.warn(
-      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode.'
+      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
     );
   }
 

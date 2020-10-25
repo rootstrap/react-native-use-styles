@@ -45,7 +45,7 @@ describe("utils", () => {
     setInCache({ constant: { blue: "blue" } });
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode.'
+      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
     );
   });
 
@@ -59,7 +59,7 @@ describe("utils", () => {
     });
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode.'
+      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
     );
   });
 });
