@@ -22,7 +22,7 @@ npm install react-native-use-styles --save
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const s = useStyles();
 
   return (
@@ -98,7 +98,7 @@ You can define constants in your global or namespaced styles that will be availa
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const isPurple = useState(true);
   const s = useStyles([isPurple]);
 
@@ -129,7 +129,7 @@ If the dependencies change, only styles with a computed in it will be recomputed
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const isPurple = useState(true);
   const s = useStyles();
 

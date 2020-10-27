@@ -3,42 +3,43 @@
 ### Path notation and aliases
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: 'bg:color:purple'
+  purple: "bg:color:purple",
 });
 ```
 
 When we use aliases or path notation, the library transforms these paths into valid styles object. This is equivalent to:
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: 'background:color:purple'
+  purple: "background:color:purple",
 });
 ```
 
 And equivalent to:
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
   purple: {
-    backgroundColor: 'purple'
-  }
+    backgroundColor: "purple",
+  },
 });
 ```
 
 ### Computed and Dynamic styles
 
 #### Computed styles:
+
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const isPurple = useState(true);
   const s = useStyles([isPurple]);
 
@@ -61,13 +62,15 @@ export default Styles({
   }
 });
 ```
+
 If the dependencies change, only styles with a computed in it will be recomputed.
 
 #### Dynamic styles:
+
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const isPurple = useState(true);
   const s = useStyles();
 
@@ -82,23 +85,26 @@ const component = () ⇒ {
 And a simple styles definition as following:
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  purple: { color: 'purple' }
+  purple: { color: "purple" },
 });
 ```
 
 ### Styles namespace name
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
-const namespace = 'sample';
+const namespace = "sample";
 
-export default Styles({
-  purple: 'color:purple'
-}, namespace);
+export default Styles(
+  {
+    purple: "color:purple",
+  },
+  namespace
+);
 ```
 
 You can manually define the namespace name if you want, this is useful for particular cases as we'll see next.
@@ -108,7 +114,7 @@ You can manually define the namespace name if you want, this is useful for parti
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const s = useStyles();
 
   return (
@@ -120,10 +126,10 @@ const component = () ⇒ {
 ```
 
 ```js
-import { Styles } from 'react-native-use-styles';
+import { Styles } from "react-native-use-styles";
 
 export default Styles({
-  anotherNamespace: 'fx:1 @sample.purple'
+  anotherNamespace: "fx:1 @sample.purple",
 });
 ```
 
@@ -134,7 +140,7 @@ Something to take into consideration is that the namespace @sample should be def
 ```js
 import { useGlobalStyles } from 'react-native-use-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const s = useGlobalStyles();
 
   return (
@@ -154,7 +160,7 @@ import { GlobalUse } from 'react-native-use-styles';
 
 const s = (styles) => GlobalUse(styles, 'namespace')();
 
-const component = () ⇒ {
+const Component = () ⇒ {
   return (
     <Text styles={s('.global .local')}>
       Hello World!
@@ -163,7 +169,7 @@ const component = () ⇒ {
 }
 ```
 
-If you don't want to use a hook, you can use directly the `GlobalUse` function to access the styles. You can pass a namespace as a parameter to get styles from a particular namespace. Be aware that this function is not using the component cache layer (more info about this layer in the next section). 
+If you don't want to use a hook, you can use directly the `GlobalUse` function to access the styles. You can pass a namespace as a parameter to get styles from a particular namespace. Be aware that this function is not using the component cache layer (more info about this layer in the next section).
 
 ### Cache layers
 
@@ -172,7 +178,7 @@ The library has 3 cache layers; the first one is at component level, this is mos
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const s = useStyles();
 
   return (
@@ -188,7 +194,7 @@ The `s` function will always return the same cached array, to avoid re-renders, 
 ```js
 import useStyles from './my-namespaced-styles';
 
-const component = () ⇒ {
+const Component = () ⇒ {
   const s = useStyles();
 
   return (
@@ -199,17 +205,17 @@ const component = () ⇒ {
 }
 ```
 
-This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides. There's a third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API (actually this API seems not to be caching in recent versions). This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them. 
+This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides. There's a third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API (actually this API seems not to be caching in recent versions). This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them.
 
 ### setSeparator
 
 ```js
-import { setSeparator, GlobalStyles } from 'react-native-use-styles';
+import { setSeparator, GlobalStyles } from "react-native-use-styles";
 
-setSeparator('-')
+setSeparator("-");
 
 export default GlobalStyles({
-  purple: 'fx-1 fx-direction-row'
+  purple: "fx-1 fx-direction-row",
 });
 ```
 
