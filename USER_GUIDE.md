@@ -14,9 +14,9 @@ npm install react-native-use-styles --save
 
 ### Path notation and aliases
 
-Apart from traditional path notations and aliases you can, by using the library, adopt a different approach.
+Apart from traditional styles object you can, by using the library, adopt a different approach.
 
-In the following code we have easily created an aliases `purple` that will set the background color to purple.
+In the following code we have easily created a shortcut for the style, that will set the background color to purple.
 
 ```js
 import { Styles } from 'react-native-use-styles';
@@ -28,26 +28,14 @@ export default Styles({
 
 When we use aliases or path notation, the library transforms these paths into valid styles object.
 
-The above given code is equivalent to the approaches given below.
-
-Approach - 1
-
-```js
-import { Styles } from 'react-native-use-styles';
-
-export default Styles({
-  purple: 'background:color:purple',
-});
-```
-
-Approach - 2
+The above given code is equivalent to the approach given below.
 
 ```js
 import { Styles } from 'react-native-use-styles';
 
 export default Styles({
   purple: {
-    backgroundColor: 'purple'
+    backgroundColor: 'purple',
   },
 });
 ```
@@ -120,7 +108,7 @@ export default Styles({
 
 ### Styles namespace name
 
-Here's the approach for using namespace name.
+Here's the approach for using a custom namespace name.
 
 ```js
 import { Styles } from 'react-native-use-styles';
@@ -181,7 +169,7 @@ const Component = () ⇒ {
 }
 ```
 
-If you are not going to use namespaced styles you can use `useGlobalStyles` to get your styles directly. Actually `useStyles` is a wrapper of `useGlobalStyles`: `useStyles = (dependencies) => useGlobalStyles(namespace, dependencies)`.
+If you are not going to use namespaced styles you can use `useGlobalStyles` to get your global styles directly. Actually `useStyles` is a wrapper of `useGlobalStyles`: `useStyles = (dependencies) => useGlobalStyles(namespace, dependencies)`.
 
 ### GlobalUse
 
@@ -199,7 +187,7 @@ const Component = () ⇒ {
 }
 ```
 
-If you don't want to use a hook, you can use directly the `GlobalUse` function to access the styles. You can pass a namespace as a parameter to get styles from a particular namespace. Be aware that this function is not using the component cache layer (more info about this layer in the next section).
+If you don't want to use the hook, you can use directly the `GlobalUse` function to access the styles. You can pass a namespace as a parameter to get styles from a particular namespace. Be aware that this function is not using the component cache layer (more info about this layer in the next section).
 
 ### Cache layers
 
@@ -219,7 +207,7 @@ const Component = () ⇒ {
 }
 ```
 
-The `s` function will always return the same cached array, to avoid re-renders, and re-transformation for the `color:purple`. In this case, the result will be:
+The `s` function will always return the same cached styles object, to avoid re-renders, and re-transformation for the `color:purple`. In this case, the result will be:
 
 ```js
 import useStyles from './my-namespaced-styles';
@@ -228,14 +216,14 @@ const Component = () ⇒ {
   const s = useStyles();
 
   return (
-    <Text styles={[{ ...global styles... }, { ...local styles... }, { color: 'purple' }]}>
+    <Text styles={{ ...globalStyles , ...localStyles, ...{ color: 'purple' } }}>
       Hello World!
     </Text>
   );
 }
 ```
 
-This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definition resides. There's a third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API (actually this API seems not to be caching in recent versions). This API caches the styles but in the native thread so you are not sending your styles objects through the bridge every time you use them.
+This cache will be cleared once you unmount the component. The second cache layer is at global level and it's actually where all the GlobalStyles and Styles definitions resides as a centralized styles storage. There's a third cache layer, the native layer, we are used to using this cache layer directly in `react-native` when we use the `StyleSheet` API (actually this API seems not to be caching in recent versions). This API caches the styles but in the native thread so you avoid sending your styles objects through the bridge every time you use them.
 
 ### setSeparator
 

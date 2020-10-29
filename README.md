@@ -40,22 +40,22 @@ Note that we are classy now, and nobody would deny it. Next we'll define our `.g
 `global-styles.js`
 
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
-  global: "flex:1 fx:dir:row",
+  global: 'flex:1 fx:dir:row',
 });
 ```
 
 We are using aliases or shortcuts to define our styles. This is equivalent to do:
 
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
   global: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 });
 ```
@@ -65,11 +65,11 @@ GlobalStyles({
 `my-namespaced-styles.js`
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  reused: "bg:color:green",
-  namespaced: ".global .reused color:purple",
+  reused: 'bg:color:green',
+  namespaced: '.global .reused color:purple',
 });
 ```
 
@@ -78,14 +78,14 @@ Namespaced styles are a way to isolate a group of styles for a particular part o
 ### Constants
 
 ```js
-import { GlobalStyles } from "react-native-use-styles";
+import { GlobalStyles } from 'react-native-use-styles';
 
 GlobalStyles({
   constants: {
-    purple: "purple",
+    purple: 'purple',
   },
-  path: "color:$purple",
-  object: { color: "$purple" },
+  path: 'color:$purple',
+  object: { color: '$purple' },
 });
 ```
 
@@ -144,10 +144,10 @@ const Component = () ⇒ {
 And a simple style definition as following:
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: { color: "purple" },
+  purple: { color: 'purple' },
 });
 ```
 
@@ -160,10 +160,10 @@ You want your global styles to be defined or imported before all the other style
 App.js
 
 ```js
-import "./globalStyles"; // ultra safe zone
-import React from "react";
+import './globalStyles'; // ultra safe zone
+import React from 'react';
 
-import CustomComponent from "./CustomComponent";
+import CustomComponent from './CustomComponent';
 
 export default function App() {
   return <CustomComponent />;
