@@ -1,18 +1,21 @@
-<p align="center"><img src="resources/logo.png" /></p>
+<h1 align="center"><img src="resources/logo.png" /></h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" />
+  <a href="https://badge.fury.io/js/react-native-use-styles"><img src="https://badge.fury.io/js/react-native-use-styles.svg" alt="npm version" height="18"></a>
   <img src="https://travis-ci.com/rootstrap/react-native-use-styles.svg?branch=main" />
+  <a href="https://codeclimate.com/github/rootstrap/react-native-use-styles/maintainability"><img src="https://api.codeclimate.com/v1/badges/6c949fe1a4afe72b3eeb/maintainability" /></a>
+  <a href="https://codeclimate.com/github/rootstrap/react-native-use-styles/test_coverage"><img src="https://api.codeclimate.com/v1/badges/6c949fe1a4afe72b3eeb/test_coverage" /></a>
+  <img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" />
 <p>
 
-#### A classy approach.
+#### A classy approach
 
 Did you ever want to organize your styles properly? This library contains an easy to use API that lets you organize your styles in a classy way.
 
 ## Installation
 
 ```
-npm install react-native-use-styles --save
+npm i react-native-use-styles
 ```
 
 ## Usage

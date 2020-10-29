@@ -6,10 +6,10 @@ This is a comprehensive guide that will let you get started easily.
 
 ### Installation
 
-To install the library in your workspace, use the following code.
+To install the library in your workspace, use the following command.
 
 ```
-npm install react-native-use-styles --save
+npm i react-native-use-styles
 ```
 
 ### Path notation and aliases
