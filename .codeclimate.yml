@@ -1,0 +1,66 @@
+version: "2"
+checks:
+  # Methods or functions defined with a high number of arguments
+  argument-count:
+    config:
+      threshold: 5
+
+  # Boolean logic that may be hard to understand
+  complex-logic:
+    config:
+      threshold: 4
+
+  # Excessive lines of code within a single file
+  file-lines:
+    config:
+      threshold: 500
+
+  # Functions or methods that may be hard to understand
+  method-complexity:
+    config:
+      threshold: 20
+
+  # Classes defined with a high number of functions or methods
+  method-count:
+    config:
+      threshold: 20
+
+  # Deeply nested control structures like if or case
+  nested-control-flow:
+    config:
+      threshold: 4
+
+  # Functions or methods with a high number of return statements
+  return-statements:
+    config:
+      threshold: 4
+
+  # Excessive lines of code within a single function or method
+  # Disabled because the render function will exceed this threshold many times
+  method-lines:
+    enabled: false
+
+  # Duplicate code which is not identical but shares the same structure (e.g. variable names may differ)
+  # Disabled because it gives some false positives
+  similar-code:
+    enabled: false
+
+  # Duplicate code which is syntactically identical (but may be formatted differently)
+  # Disabled because it gives some false positives
+  identical-code:
+    enabled: false
+plugins:
+  eslint:
+    enabled: true
+    config:
+      config: ~/.eslintrc
+  nodesecurity:
+    enabled: true
+exclude_patterns:
+  - "android/"
+  - "ios/"
+  - "node_modules/"
+  - "/test/**/*"
+  - "**/vendor/"
+  - "**/*.d.ts"
+  - "coverage/**/*"
