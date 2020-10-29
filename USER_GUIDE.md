@@ -1,40 +1,64 @@
 ## User Guide
 
+Hi, 😄 welcome to the User's guide to using 'useStyles'. With 'useStyles' you can easily de-clutter 💆‍♂️ your style code and write a better and more efficient styling code 🤩.
+
+This is a comprehensive guide that will let you get started easily.
+
+### Installation
+
+To install the library in your workspace, use the following code.
+
+```
+npm install react-native-use-styles --save
+```
+
 ### Path notation and aliases
 
+Apart from traditional path notations and aliases you can, by using the library, adopt a different approach.
+
+In the following code we have easily created an aliases `purple` that will set the background color to purple.
+
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: "bg:color:purple",
+  purple: 'bg:color:purple',
 });
 ```
 
-When we use aliases or path notation, the library transforms these paths into valid styles object. This is equivalent to:
+When we use aliases or path notation, the library transforms these paths into valid styles object.
+
+The above given code is equivalent to the approaches given below.
+
+Approach - 1
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: "background:color:purple",
+  purple: 'background:color:purple',
 });
 ```
 
-And equivalent to:
+Approach - 2
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
   purple: {
-    backgroundColor: "purple",
+    backgroundColor: 'purple'
   },
 });
 ```
 
 ### Computed and Dynamic styles
 
+'Computed styles' and 'Dynamic styles' can be easily applied using the following approach, while using 'useStyles' library.
+
 #### Computed styles:
+
+Here's the approach to use 'Computed Styles' using 'useStyles'.
 
 ```js
 import useStyles from './my-namespaced-styles';
@@ -67,6 +91,8 @@ If the dependencies change, only styles with a computed in it will be recomputed
 
 #### Dynamic styles:
 
+Here's the approach to use 'Dynamic Styles' using 'useStyles'.
+
 ```js
 import useStyles from './my-namespaced-styles';
 
@@ -85,23 +111,25 @@ const Component = () ⇒ {
 And a simple styles definition as following:
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  purple: { color: "purple" },
+  purple: { color: 'purple' },
 });
 ```
 
 ### Styles namespace name
 
-```js
-import { Styles } from "react-native-use-styles";
+Here's the approach for using namespace name.
 
-const namespace = "sample";
+```js
+import { Styles } from 'react-native-use-styles';
+
+const namespace = 'sample';
 
 export default Styles(
   {
-    purple: "color:purple",
+    purple: 'color:purple',
   },
   namespace
 );
@@ -110,6 +138,8 @@ export default Styles(
 You can manually define the namespace name if you want, this is useful for particular cases as we'll see next.
 
 ### Using another namespaced style
+
+This is the use case for using the above mentioned approach.
 
 ```js
 import useStyles from './my-namespaced-styles';
@@ -126,10 +156,10 @@ const Component = () ⇒ {
 ```
 
 ```js
-import { Styles } from "react-native-use-styles";
+import { Styles } from 'react-native-use-styles';
 
 export default Styles({
-  anotherNamespace: "fx:1 @sample.purple",
+  anotherNamespace: 'fx:1 @sample.purple',
 });
 ```
 
@@ -210,12 +240,12 @@ This cache will be cleared once you unmount the component. The second cache laye
 ### setSeparator
 
 ```js
-import { setSeparator, GlobalStyles } from "react-native-use-styles";
+import { setSeparator, GlobalStyles } from 'react-native-use-styles';
 
-setSeparator("-");
+setSeparator('-');
 
 export default GlobalStyles({
-  purple: "fx-1 fx-direction-row",
+  purple: 'fx-1 fx-direction-row',
 });
 ```
 
