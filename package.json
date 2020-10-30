@@ -19,7 +19,8 @@
     "build": "cross-env NODE_ENV=production rollup -c && cross-env NODE_ENV=development rollup -c",
     "prepare": "cross-env NODE_ENV=production rollup -c && cross-env NODE_ENV=development rollup -c",
     "lint": "eslint *.js **/*.js",
-    "check:types": "tsc"
+    "check:types": "tsc",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -58,7 +59,7 @@
     "eslint-plugin-react-native": "^3.10.0",
     "husky": "^4.3.0",
     "jest": "^24.9.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.1.2",
     "react": "^16.8.0",
     "react-native": "^0.59.0",
     "react-test-renderer": "^16.8.0",

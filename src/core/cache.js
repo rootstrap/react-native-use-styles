@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { GLOBAL_KEY, CONSTANTS_KEY, COMPUTED_KEY } from "../constants";
+import { StyleSheet } from 'react-native';
+import { GLOBAL_KEY, CONSTANTS_KEY, COMPUTED_KEY } from '../constants';
 
 let globalCache;
 
@@ -9,19 +9,19 @@ export const clearCache = () => {
 };
 clearCache();
 
-const processDefinition = definition => {
+const processDefinition = (definition) => {
   const constants = definition.constants;
   const computed = definition.computed;
 
-  if (process.env.NODE_ENV !== "production" && definition.constant) {
+  if (process.env.NODE_ENV !== 'production' && definition.constant) {
     console.warn(
-      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
+      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.',
     );
   }
 
-  if (process.env.NODE_ENV !== "production" && definition.computeds) {
+  if (process.env.NODE_ENV !== 'production' && definition.computeds) {
     console.warn(
-      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.'
+      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.',
     );
   }
 
@@ -59,7 +59,7 @@ export const setInCache = (definition, namespace) => {
   Object.assign(cache, StyleSheet.create(styles));
   Object.assign(cache, {
     [CONSTANTS_KEY]: constants,
-    [COMPUTED_KEY]: computed
+    [COMPUTED_KEY]: computed,
   });
 };
 
@@ -68,7 +68,7 @@ export const getFromCache = (
   namespace,
   definition,
   isConstant,
-  isComputed
+  isComputed,
 ) => {
   let value;
 
@@ -84,15 +84,15 @@ export const getFromCache = (
       key,
       globalCache[namespace],
       isConstant,
-      isComputed
+      isComputed,
     );
   } else if (
-    process.env.NODE_ENV !== "production" &&
+    process.env.NODE_ENV !== 'production' &&
     namespace &&
     !globalCache[namespace]
   ) {
     console.warn(
-      `useStyles Non-Existent-Namespace: Namespace "${namespace}" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`
+      `useStyles Non-Existent-Namespace: Namespace "${namespace}" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`,
     );
   }
 
@@ -102,19 +102,19 @@ export const getFromCache = (
       key,
       globalCache[GLOBAL_KEY],
       isConstant,
-      isComputed
+      isComputed,
     );
   }
 
   // key not found
   if (!value) {
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       console.warn(
         `useStyles Non-Existent-${
-          isConstant ? "Constant: Constant" : "Style: Style"
+          isConstant ? 'Constant: Constant' : 'Style: Style'
         } "${key}" does not exist. You are seeing this warning because you are in development mode. In a production build there will be no warning and these ${
-          isConstant ? "constants" : "styles"
-        } will be ignored.`
+          isConstant ? 'constants' : 'styles'
+        } will be ignored.`,
       );
     }
 

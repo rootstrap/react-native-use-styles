@@ -1,8 +1,8 @@
-import "./styles/global";
-import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import './styles/global';
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
 
-import useStyles from "./styles/namespaced";
+import useStyles from './styles/namespaced';
 
 export default function App() {
   const [isDisabled, setDisabled] = useState(false);
@@ -11,7 +11,10 @@ export default function App() {
   return (
     <View style={s`.container`}>
       <Text style={s`.centered font:size:$title &disabled`}>Hello Planet!</Text>
-      <Button onPress={() => setDisabled(current => !current)} title="toggle" />
+      <Button
+        onPress={() => setDisabled((current) => !current)}
+        title="toggle"
+      />
     </View>
   );
 }

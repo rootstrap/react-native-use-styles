@@ -3,27 +3,28 @@ import {
   NAMESPACE_PREFIX,
   CONSTANTS_PREFIX,
   COMPTUED_PREFIX,
-  NAMESPACE_REGEX
-} from "../constants";
+  NAMESPACE_REGEX,
+} from '../constants';
 
-export const isNamespace = style => style.startsWith(NAMESPACE_PREFIX);
+export const isNamespace = (style) => style.startsWith(NAMESPACE_PREFIX);
 
-export const getKeyFromNamespace = style => style.replace(NAMESPACE_REGEX, "");
+export const getKeyFromNamespace = (style) =>
+  style.replace(NAMESPACE_REGEX, '');
 
-export const getKey = style => style.substring(1);
+export const getKey = (style) => style.substring(1);
 
-export const getNamespace = style =>
+export const getNamespace = (style) =>
   style.match(NAMESPACE_REGEX)[0].substring(1);
 
-export const hasClassName = style => style.indexOf(CLASS_PREFIX) !== -1;
+export const hasClassName = (style) => style.indexOf(CLASS_PREFIX) !== -1;
 
-export const hasConstant = style => style.indexOf(CONSTANTS_PREFIX) !== -1;
+export const hasConstant = (style) => style.indexOf(CONSTANTS_PREFIX) !== -1;
 
-export const hasComputed = style => style.indexOf(COMPTUED_PREFIX) !== -1;
+export const hasComputed = (style) => style.indexOf(COMPTUED_PREFIX) !== -1;
 
 export const getPathFromLiteralTag = (strings, expressions) =>
   strings.reduce(
     (result, currentString, i) =>
-      `${result}${currentString}${expressions[i] ? expressions[i] : ""}`,
-    ""
+      `${result}${currentString}${expressions[i] ? expressions[i] : ''}`,
+    '',
   );

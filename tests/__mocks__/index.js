@@ -1,6 +1,6 @@
-jest.mock("react-native/Libraries/StyleSheet/StyleSheet", () => {
+jest.mock('react-native/Libraries/StyleSheet/StyleSheet', () => {
   return {
-    create: style => style,
-    flatten: style => style
+    create: (style) => style,
+    flatten: (style) => style,
   };
 });

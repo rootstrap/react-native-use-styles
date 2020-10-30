@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { hasComputed, getPathFromLiteralTag } from "../utils";
-import { GlobalUse, GlobalStyles } from "./manager";
+import { useRef } from 'react';
+import { hasComputed, getPathFromLiteralTag } from '../utils';
+import { GlobalUse, GlobalStyles } from './manager';
 
 const recomputeMutation = (cache, dependencies) => {
   for (let [key, { compute }] of Object.entries(cache)) {
     if (hasComputed(key)) {
       cache[key] = {
         compute,
-        style: compute(dependencies)
+        style: compute(dependencies),
       };
     }
   }
@@ -52,7 +52,7 @@ export const Styles = (definition, namespace) => {
 
   GlobalStyles(definition, definitionNamespace);
 
-  const useStyles = dependencies =>
+  const useStyles = (dependencies) =>
     useGlobalStyles(definitionNamespace, dependencies);
   useStyles.namespace = definitionNamespace;
 
