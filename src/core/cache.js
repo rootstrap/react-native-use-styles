@@ -91,11 +91,12 @@ export const getFromCache = (
     !globalCache[namespace]
   ) {
     warn(
-      namespace !== undefined && !globalCache[namespace],
+      true,
       `Namespace "${namespace}" does not exist or has not been imported`,
       'Non-Existent-Namespace',
     );
   }
+
   // was not in the namespace, try in the global cache
   if (!value) {
     value = getValueFromStorageObject(

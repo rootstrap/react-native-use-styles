@@ -41,7 +41,7 @@ describe('utils', () => {
     );
   });
 
-  it('setInCache constant typo', () => {
+  it('Development mode only: setInCache constant typo', () => {
     setInCache({ constant: { blue: 'blue' } });
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
@@ -49,7 +49,7 @@ describe('utils', () => {
     );
   });
 
-  it('setInCache computeds typo', () => {
+  it('Development mode only: setInCache computeds typo', () => {
     setInCache({
       computeds: {
         style: () => {
