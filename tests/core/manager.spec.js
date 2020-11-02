@@ -196,7 +196,7 @@ describe('utils', () => {
     GlobalUse('color:@not-a-namespace$blue')();
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      `useStyles Non-Existent-Namespace: Namespace "not-a-namespace" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`,
+      `useStyles Non-Existent-Namespace: Namespace "not-a-namespace" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build, there will be no warning.`,
     );
   });
 
@@ -211,7 +211,7 @@ describe('utils', () => {
     });
     expect(console.warn).toBeCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      'useStyles Invalid-Style-Type: Style "outsideComputed" is not valid. Computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.',
+      'useStyles Invalid-Style-Type: Style "outsideComputed" is not valid. Computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build, there will be no warning.',
     );
   });
 });

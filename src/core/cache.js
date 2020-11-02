@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { GLOBAL_KEY, CONSTANTS_KEY, COMPUTED_KEY } from '../constants';
+import { warn } from '../utils';
 
 let globalCache;
 
@@ -9,21 +10,19 @@ export const clearCache = () => {
 };
 clearCache();
 
-const processDefinition = (definition) => {
+const processDefinition = definition => {
   const constants = definition.constants;
   const computed = definition.computed;
 
-  if (process.env.NODE_ENV !== 'production' && definition.constant) {
-    console.warn(
-      'useStyles: "constant" key found in styles definition. Maybe you intended to use "constants" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.',
-    );
-  }
+  warn(
+    definition.constant !== undefined,
+    `"constant" key found in styles definition. Maybe you intended to use "constants" instead`,
+  );
 
-  if (process.env.NODE_ENV !== 'production' && definition.computeds) {
-    console.warn(
-      'useStyles: "computeds" key found in styles definition. Maybe you intended to use "computed" instead. You are seeing this warning because you are in development mode. In a production build there will be no warning.',
-    );
-  }
+  warn(
+    definition.computeds !== undefined,
+    `"computeds" key found in styles definition. Maybe you intended to use "computed" instead`,
+  );
 
   definition.constants = null;
   definition.computed = null;
@@ -91,11 +90,12 @@ export const getFromCache = (
     namespace &&
     !globalCache[namespace]
   ) {
-    console.warn(
-      `useStyles Non-Existent-Namespace: Namespace "${namespace}" does not exist or has not been imported. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`,
+    warn(
+      namespace !== undefined && !globalCache[namespace],
+      `Namespace "${namespace}" does not exist or has not been imported`,
+      'Non-Existent-Namespace',
     );
   }
-
   // was not in the namespace, try in the global cache
   if (!value) {
     value = getValueFromStorageObject(
@@ -108,16 +108,11 @@ export const getFromCache = (
 
   // key not found
   if (!value) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn(
-        `useStyles Non-Existent-${
-          isConstant ? 'Constant: Constant' : 'Style: Style'
-        } "${key}" does not exist. You are seeing this warning because you are in development mode. In a production build there will be no warning and these ${
-          isConstant ? 'constants' : 'styles'
-        } will be ignored.`,
-      );
-    }
-
+    warn(
+      !value,
+      `${isConstant ? 'Constant' : 'Style'} "${key}" does not exist`,
+      `Non-Existent-${isConstant ? 'Constant' : 'Style'}`,
+    );
     return;
   }
 

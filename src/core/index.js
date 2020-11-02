@@ -52,7 +52,7 @@ export const Styles = (definition, namespace) => {
 
   GlobalStyles(definition, definitionNamespace);
 
-  const useStyles = (dependencies) =>
+  const useStyles = dependencies =>
     useGlobalStyles(definitionNamespace, dependencies);
   useStyles.namespace = definitionNamespace;
 

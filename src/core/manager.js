@@ -8,6 +8,7 @@ import {
   isNamespace,
   getKeyFromNamespace,
   getNamespace,
+  warn,
 } from '../utils';
 import { CONSTANTS_KEY, COMPUTED_KEY } from '../constants';
 
@@ -41,11 +42,12 @@ const constantsMutation = (styles, namespace, definition) => {
 const computePath = (path, namespace, dependencies) => {
   let fn = getFromStorage(path, namespace, null, false, true);
   if (!fn) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn(
-        `useStyles Non-Existent-Computed: Computed style "${path}" not found in cache. You are seeing this warning because you are in development mode. In a production build there will be no warning.`,
-      );
-    }
+    warn(
+      !fn,
+      `Computed style "${path}" not found in cache`,
+      'Non-Existent-Computed',
+    );
+
     return;
   }
 
@@ -68,7 +70,7 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
       } else if (!definition && hasComputed(rawStyle)) {
         style = computePath(rawStyle, namespace, dependencies);
       } else if (hasPath(rawStyle)) {
-        style = transform(rawStyle, (key) =>
+        style = transform(rawStyle, key =>
           getFromStorage(key, namespace, definition, true),
         );
       } else {
@@ -82,7 +84,7 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
 export const GlobalUse = (rawStyles, namespace) => {
   // TODO: this is retrieving all the styles even if we are recomputing
   // maybe, if we are recomputing, we should find a way to retreive only the computeds
-  return (dependencies) => {
+  return dependencies => {
     let styles = rawStyles;
 
     if (typeof styles === 'string') {
@@ -100,11 +102,11 @@ export const GlobalStyles = (definition, namespace) => {
   for (let [key, rawStyles] of Object.entries(definition)) {
     let styles = rawStyles;
 
-    if (process.env.NODE_ENV !== 'production' && typeof styles === 'function') {
-      console.warn(
-        `useStyles Invalid-Style-Type: Style "${key}" is not valid. Computed styles are placed inside the computed section. You are seeing this warning because you are in development mode. In a production build there will be no warning and these styles will be ignored.`,
-      );
-    }
+    warn(
+      typeof styles === 'function',
+      `Style "${key}" is not valid. Computed styles are placed inside the computed section`,
+      'Invalid-Style-Type',
+    );
 
     if (typeof styles === 'string') {
       definition[key] = processStyles(styles, namespace, null, definition);

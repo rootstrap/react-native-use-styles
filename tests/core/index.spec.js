@@ -171,7 +171,7 @@ describe('utils', () => {
           styles={s`&style`}
           title="changeState"
           testID="changeState"
-          onPress={() => setIsFirst((current) => !current)}
+          onPress={() => setIsFirst(current => !current)}
         />
       );
     };
