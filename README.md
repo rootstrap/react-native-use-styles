@@ -6,7 +6,7 @@
   <a href="https://codeclimate.com/github/rootstrap/react-native-use-styles/maintainability"><img src="https://api.codeclimate.com/v1/badges/6c949fe1a4afe72b3eeb/maintainability" /></a>
   <a href="https://codeclimate.com/github/rootstrap/react-native-use-styles/test_coverage"><img src="https://api.codeclimate.com/v1/badges/6c949fe1a4afe72b3eeb/test_coverage" /></a>
   <img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" />
-<p>
+</p>
 
 #### A classy approach
 
