@@ -1,17 +1,17 @@
 {
   "name": "react-native-use-styles",
-  "version": "1.3.2",
+  "version": "1.3.5",
   "description": "React Native useStyles",
   "main": "index.js",
   "module": "src/index.js",
-  "types": "types.d.ts",
+  "types": "index.d.ts",
   "files": [
     "cjs",
     "README.md",
     "LICENSE.md",
     "USER_GUIDE.md",
     "index.js",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "scripts": {
     "test": "jest --verbose",
