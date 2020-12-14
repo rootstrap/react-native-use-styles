@@ -1,6 +1,6 @@
 {
   "name": "react-native-use-styles",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "React Native useStyles",
   "main": "index.js",
   "module": "src/index.js",
