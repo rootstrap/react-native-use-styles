@@ -1,4 +1,9 @@
-import { setInCache, getFromCache, clearCache } from '../../src/core/cache';
+import {
+  setInCache,
+  getFromCache,
+  clearCache,
+  getConstant,
+} from '../../src/core/cache';
 
 describe('utils', () => {
   beforeEach(() => {
@@ -14,6 +19,24 @@ describe('utils', () => {
   it('setInCache sets in namespaced cache properly', () => {
     setInCache({ style: true }, 'namespace');
     expect(getFromCache('style', 'namespace')).toBe(true);
+  });
+
+  it('getConstant gets the constant from global cache properly', () => {
+    setInCache({ constants: { red: '#ff0000' } });
+    expect(getConstant('red')).toBe('#ff0000');
+  });
+
+  it('getConstant gets the constant from string in namespace cache properly', () => {
+    setInCache({ constants: { red: '#ff0000' } }, 'namespace');
+    expect(getConstant('red', 'namespace')).toBe('#ff0000');
+  });
+
+  it('getConstant gets the constant from object in namespace cache properly', () => {
+    const useStyles = () => {};
+    useStyles.namespace = 'namespace';
+
+    setInCache({ constants: { one: 1 } }, 'namespace');
+    expect(getConstant('one', useStyles)).toBe(1);
   });
 
   it('Development mode only: getFromCache produces a console.warn when providing an Non-Existent-Namespace', () => {

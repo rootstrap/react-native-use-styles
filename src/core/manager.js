@@ -70,7 +70,7 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
       } else if (!definition && hasComputed(rawStyle)) {
         style = computePath(rawStyle, namespace, dependencies);
       } else if (hasPath(rawStyle)) {
-        style = transform(rawStyle, key =>
+        style = transform(rawStyle, (key) =>
           getFromStorage(key, namespace, definition, true),
         );
       } else {
@@ -84,7 +84,7 @@ const processStyles = (rawStyles, namespace, dependencies, definition) => {
 export const GlobalUse = (rawStyles, namespace) => {
   // TODO: this is retrieving all the styles even if we are recomputing
   // maybe, if we are recomputing, we should find a way to retreive only the computeds
-  return dependencies => {
+  return (dependencies) => {
     let styles = rawStyles;
 
     if (typeof styles === 'string') {

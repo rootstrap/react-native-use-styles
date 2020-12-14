@@ -12,5 +12,5 @@
     "alwaysStrict": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.d.ts"]
+  "include": ["src/**/*.d.ts", "types.d.ts"]
 }

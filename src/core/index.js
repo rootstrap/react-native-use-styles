@@ -13,7 +13,7 @@ const recomputeMutation = (cache, dependencies) => {
   }
 };
 
-export const useGlobalStyles = (nameSpace, dependencies = []) => {
+export const useGlobalStyles = (namespace, dependencies = []) => {
   // create local cache for returned styles, so we can avoid re renders, transformations and computations
   const lastDependencies = useRef(dependencies);
   const localCache = useRef(Object.create(null));
@@ -36,7 +36,7 @@ export const useGlobalStyles = (nameSpace, dependencies = []) => {
       return cache[path].style;
     }
 
-    const compute = GlobalUse(path, nameSpace);
+    const compute = GlobalUse(path, namespace);
     const style = compute(dependencies);
     Object.assign(cache, { [path]: { style, compute } });
     return style;
@@ -52,7 +52,7 @@ export const Styles = (definition, namespace) => {
 
   GlobalStyles(definition, definitionNamespace);
 
-  const useStyles = dependencies =>
+  const useStyles = (dependencies) =>
     useGlobalStyles(definitionNamespace, dependencies);
   useStyles.namespace = definitionNamespace;
 

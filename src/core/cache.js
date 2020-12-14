@@ -10,7 +10,7 @@ export const clearCache = () => {
 };
 clearCache();
 
-const processDefinition = definition => {
+const processDefinition = (definition) => {
   const constants = definition.constants;
   const computed = definition.computed;
 
@@ -119,4 +119,11 @@ export const getFromCache = (
 
   // if it's a style, get native style from cached id with flatten
   return isConstant || isComputed ? value : StyleSheet.flatten(value);
+};
+
+export const getConstant = (name, namespace) => {
+  let space =
+    namespace && namespace.namespace ? namespace.namespace : namespace;
+
+  return getFromCache(name, space, null, true);
 };
