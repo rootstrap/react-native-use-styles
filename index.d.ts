@@ -12,6 +12,7 @@ type TagStyles = (strings: string[], expressions: string[]) => StyleObject;
 type UseStyles = {
   (): (dependencies?: Array<any>) => TagStyles;
   namespace: UniqueSpace;
+  getConstant: (name: string) => any;
 };
 
 export function useGlobalStyles(

@@ -243,18 +243,21 @@ You can change the separator used in the styles' definitions.
 
 ```js
 import { getConstant } from 'react-native-use-styles';
+import useStyles from  from 'namespaced-styles';
 
-// global
-const myConstant = getConstant('redColor');
+// namespaced
+const myConstant = useStyles.getConstant('redColor');
 
 // explicit namespace
 const myConstant = getConstant('redColor', 'mynamespace');
 
 // implicit namespace
 const myConstant = getConstant('redColor', useStyles);
-
 // or
 const myConstant = getConstant('redColor', useStyles.namespace);
+
+// global
+const myConstant = getConstant('redColor');
 ```
 
 Sometimes you may want to reuse a constant outside of styles. In that case, you can use getConstant.

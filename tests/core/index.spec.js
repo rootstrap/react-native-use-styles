@@ -97,6 +97,16 @@ describe('utils', () => {
     });
   });
 
+  it('useStyles getConstant returns the namespaced constant', () => {
+    const useStyles = Styles({
+      constants: {
+        title: 40,
+      },
+    });
+
+    expect(useStyles.getConstant('title')).toBe(40);
+  });
+
   it('useGlobalStyles hook returns a style', () => {
     const useStyles = Styles({
       style: 'color:blue',
@@ -171,7 +181,7 @@ describe('utils', () => {
           styles={s`&style`}
           title="changeState"
           testID="changeState"
-          onPress={() => setIsFirst(current => !current)}
+          onPress={() => setIsFirst((current) => !current)}
         />
       );
     };

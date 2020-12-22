@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { hasComputed, getPathFromLiteralTag } from '../utils';
 import { GlobalUse, GlobalStyles } from './manager';
+import { getConstant } from './cache';
 
 const recomputeMutation = (cache, dependencies) => {
   for (let [key, { compute }] of Object.entries(cache)) {
@@ -55,6 +56,7 @@ export const Styles = (definition, namespace) => {
   const useStyles = (dependencies) =>
     useGlobalStyles(definitionNamespace, dependencies);
   useStyles.namespace = definitionNamespace;
+  useStyles.getConstant = (name) => getConstant(name, definitionNamespace);
 
   return useStyles;
 };
