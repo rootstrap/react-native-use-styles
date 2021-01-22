@@ -1,6 +1,5 @@
-import stylesDictionary from '../dictionaries/styles';
-import aliasesDictionary from '../dictionaries/aliases';
-import { hasConstant, warn } from '../utils';
+import getAlias from '../aliases';
+import { hasConstant, capitalize } from '../utils';
 import { DEFAULT_SEPARATOR } from '../constants';
 
 export let separator = DEFAULT_SEPARATOR;
@@ -14,32 +13,20 @@ const getValueFromParts = (parts, getConstant) => {
   if (hasConstant(value)) {
     value = getConstant(value);
   } else {
-    value = aliasesDictionary[value] || value;
+    value = getAlias(value);
   }
 
   return parseFloat(value) || value;
 };
 
 const getKeyFromParts = (parts) => {
-  let current = stylesDictionary;
+  let current = getAlias(parts[0]);
 
-  for (let x = 0; x < parts.length - 1; x += 1) {
-    let part = parts[x];
-    part = aliasesDictionary[part] || part;
-    current = current[part];
-
-    if (current === undefined) {
-      warn(
-        current === undefined,
-        `"${part}" is not a valid key for styles`,
-        'Invalid-Style-Key',
-      );
-      // return to be executed when current is undefined
-      return;
-    }
+  for (let x = 1; x < parts.length - 1; x += 1) {
+    current += capitalize(getAlias(parts[x]));
   }
 
-  return current.__propName;
+  return current;
 };
 
 // PRECONDITION: at least one key-value pair exists in the path

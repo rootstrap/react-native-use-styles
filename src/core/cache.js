@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { GLOBAL_KEY, CONSTANTS_KEY, COMPUTED_KEY } from '../constants';
 import { warn } from '../utils';
 
@@ -10,7 +9,7 @@ export const clearCache = () => {
 };
 clearCache();
 
-const processDefinition = (definition) => {
+const mutateDefinition = (definition) => {
   const constants = definition.constants;
   const computed = definition.computed;
 
@@ -27,9 +26,7 @@ const processDefinition = (definition) => {
   definition.constants = null;
   definition.computed = null;
 
-  const styles = StyleSheet.create(definition);
-
-  return { styles, constants, computed };
+  return { constants, computed };
 };
 
 const getValueFromStorageObject = (key, object, isConstant, isComputed) => {
@@ -45,7 +42,7 @@ const getValueFromStorageObject = (key, object, isConstant, isComputed) => {
 };
 
 export const setInCache = (definition, namespace) => {
-  const { styles, constants, computed } = processDefinition(definition);
+  const { constants, computed } = mutateDefinition(definition);
   let cache = globalCache;
 
   if (namespace) {
@@ -55,7 +52,7 @@ export const setInCache = (definition, namespace) => {
     cache = cache[GLOBAL_KEY];
   }
 
-  Object.assign(cache, StyleSheet.create(styles));
+  Object.assign(cache, definition);
   Object.assign(cache, {
     [CONSTANTS_KEY]: constants,
     [COMPUTED_KEY]: computed,
@@ -117,8 +114,7 @@ export const getFromCache = (
     return;
   }
 
-  // if it's a style, get native style from cached id with flatten
-  return isConstant || isComputed ? value : StyleSheet.flatten(value);
+  return value;
 };
 
 export const getConstant = (name, namespace) => {

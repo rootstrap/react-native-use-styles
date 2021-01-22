@@ -2,7 +2,7 @@
   input: 'fx:dir:col'
   output: { flexDirection: 'column' }
 */
-export default Object.assign(Object.create(null), {
+const aliases = Object.assign(Object.create(null), {
   bot: 'bottom',
   col: 'column',
   dir: 'direction',
@@ -16,3 +16,7 @@ export default Object.assign(Object.create(null), {
   wd: 'width',
   hg: 'height',
 });
+
+export default (alias) => {
+  return aliases[alias] || alias;
+};

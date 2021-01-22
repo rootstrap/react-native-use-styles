@@ -1,7 +1,7 @@
 {
-  "name": "react-native-use-styles",
+  "name": "react-use-styles",
   "version": "1.3.7",
-  "description": "React Native useStyles",
+  "description": "React useStyles",
   "main": "index.js",
   "module": "src/index.js",
   "types": "index.d.ts",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rootstrap/react-native-use-styles.git"
+    "url": "git+https://github.com/rootstrap/react-use-styles.git"
   },
   "keywords": [
     "react",
@@ -39,9 +39,9 @@
   "author": "Agustín Prieto <agustin@rootstrap.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rootstrap/react-native-use-styles/issues"
+    "url": "https://github.com/rootstrap/react-use-styles/issues"
   },
-  "homepage": "https://github.com/rootstrap/react-native-use-styles#readme",
+  "homepage": "https://github.com/rootstrap/react-use-styles#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -70,7 +70,6 @@
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.59.0",
     "react-test-renderer": "^16.8.0"
   },
   "husky": {

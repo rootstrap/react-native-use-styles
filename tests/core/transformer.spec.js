@@ -58,7 +58,9 @@ describe('utils', () => {
       },
     });
     expect(
-      transform('color:$purple', key => getFromStorage(key, null, null, true)),
+      transform('color:$purple', (key) =>
+        getFromStorage(key, null, null, true),
+      ),
     ).toMatchObject({
       color: 'purple',
     });
@@ -75,7 +77,7 @@ describe('utils', () => {
       'namespace',
     );
     expect(
-      transform('color:@namespace$purple', key =>
+      transform('color:@namespace$purple', (key) =>
         getFromStorage(key, 'namespace', null, true),
       ),
     ).toMatchObject({
@@ -86,13 +88,5 @@ describe('utils', () => {
   it('sets a separator', () => {
     setSeparator('-');
     expect(transform('flex-1')).toMatchObject({ flex: 1 });
-  });
-
-  it('Development mode only: transform produces a console.warn when providing an Invalid-Style-Key', () => {
-    expect(transform('non-existent:1')).toMatchObject({ undefined: 1 });
-    expect(console.warn).toBeCalledTimes(1);
-    expect(console.warn).toHaveBeenLastCalledWith(
-      'useStyles Invalid-Style-Key: "non-existent" is not a valid key for styles. You are seeing this warning because you are in development mode. In a production build, there will be no warning.',
-    );
   });
 });
