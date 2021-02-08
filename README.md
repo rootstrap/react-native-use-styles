@@ -10,7 +10,7 @@
 
 #### A classy approach
 
-Did you ever want to organize your styles properly? This library contains an easy to use API that lets you organize your styles in a classy way.
+Did you ever want to organize your styles properly? This library contains an easy to use API that lets you do it in a classy way.
 
 ## Installation
 
